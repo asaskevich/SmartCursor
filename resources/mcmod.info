@@ -1,0 +1,16 @@
+[
+{
+  "modid": "SmartCursor",
+  "name": "SmartCursor",
+  "description": "Useful utilities for ingame cursor",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/asaskevich/SmartCursor",
+  "updateUrl": "",
+  "authors": ["asaskevich"],
+  "credits": ["asaskevich"],
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
