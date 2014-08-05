@@ -2,13 +2,11 @@ package com.asaskevich.smartcursor;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
-
 import com.asaskevich.smartcursor.keyboard.KeyBindler;
 import com.asaskevich.smartcursor.keyboard.KeyInputHandler;
 import com.asaskevich.smartcursor.mod.ModInfo;
 import com.asaskevich.smartcursor.proxy.CommonProxy;
-import com.asaskevich.smartcursor.utils.Settings;
-
+import com.asaskevich.smartcursor.utils.Setting;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -28,9 +26,9 @@ public class SmartCursor {
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {
 		// Init
-		boolean isRender = Settings.isRenderEnabled(event.getSuggestedConfigurationFile());
+		Setting.loadSettings(event.getSuggestedConfigurationFile());
 		mc = Minecraft.getMinecraft();
-		renderHandler = new RenderHandler(mc, isRender);
+		renderHandler = new RenderHandler(mc);
 		keyInputHandler = new KeyInputHandler(renderHandler, event.getSuggestedConfigurationFile());
 		KeyBindler.init();
 		// Register handlers

@@ -1,31 +1,24 @@
 package com.asaskevich.smartcursor.keyboard;
 
 import java.io.File;
-
+import net.minecraft.client.Minecraft;
 import com.asaskevich.smartcursor.RenderHandler;
-
-import net.minecraftforge.common.config.Configuration;
+import com.asaskevich.smartcursor.gui.GuiSMSettings;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 
 public class KeyInputHandler {
-
-	private RenderHandler renderHandler;
-	private File configFile;
+	private Minecraft mc = Minecraft.getMinecraft();
+	private GuiSMSettings gui;
 
 	public KeyInputHandler(RenderHandler r, File file) {
-		this.renderHandler = r;
-		this.configFile = file;
+		this.gui = new GuiSMSettings(r, file);
 	}
 
 	@SubscribeEvent
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
 		if (KeyBindler.renderBlockDamage.isPressed()) {
-			renderHandler.invertRender();
-			Configuration config = new Configuration(configFile);
-			config.load();
-			config.get("smartCursor", "enabled", renderHandler.getRender()).set(renderHandler.getRender());
-			config.save();
+			mc.displayGuiScreen(gui);
 		}
 	}
 }
