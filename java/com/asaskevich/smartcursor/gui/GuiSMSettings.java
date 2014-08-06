@@ -1,12 +1,11 @@
 package com.asaskevich.smartcursor.gui;
 
 import java.io.File;
-import com.asaskevich.smartcursor.RenderHandler;
-import com.asaskevich.smartcursor.utils.Setting;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.common.config.Configuration;
+import com.asaskevich.smartcursor.RenderHandler;
+import com.asaskevich.smartcursor.utils.Setting;
 
 public class GuiSMSettings extends GuiScreen {
 	private RenderHandler renderHandler;
@@ -30,26 +29,28 @@ public class GuiSMSettings extends GuiScreen {
 		fH = this.fontRendererObj.FONT_HEIGHT;
 		this.buttonList.clear();
 		// Enable/Disable all mod
-		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2, btnW, btnH,
-				Setting.isEnabled ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2, btnW, btnH, Setting.isEnabled ? "ON"
+				: "OFF"));
 		// Enable/Disable block damage and choose style
-		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2 + (btnH + fH) * 1, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 1, btnW, btnH,
 				renderHandler.getStyleName()));
 		// Enable/Disable mob indicator and choose style
-		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2 + (btnH + fH) * 2, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 2, btnW, btnH,
 				renderHandler.getMobStyleName()));
 		// Show Drop info
-		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2 + (btnH + fH) * 3, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 3, btnW, btnH,
 				Setting.showDrop ? "ON" : "OFF"));
 		// Show Drop enchs
-		this.buttonList.add(new GuiOptionButton(4, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2 + (btnH + fH) * 4, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(4, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 4, btnW, btnH,
 				Setting.showEnch ? "ON" : "OFF"));
 		// Show Drop durability
-		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2 + (btnH + fH) * 5, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 5, btnW, btnH,
 				Setting.showDur ? "ON" : "OFF"));
 		// Show XPorb
-		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, this.height / 4 - 60 + 50 - btnH / 2 + (btnH + fH) * 6, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 6, btnW, btnH,
 				Setting.showXPOrb ? "ON" : "OFF"));
+		// Advanced options
+		this.buttonList.add(new GuiOptionButton(7, w - btnW - 10, h - btnH - 10, btnW, btnH, "ADVANCED"));
 		// Small fix
 		for (int i = 1; i < this.buttonList.size(); i++) {
 			GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(i);
@@ -108,6 +109,9 @@ public class GuiSMSettings extends GuiScreen {
 			renderHandler.invertXPInfo();
 			button.displayString = Setting.showXPOrb ? "ON" : "OFF";
 		}
+		if (button.id == 7) {
+			mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler, configFile));
+		}
 		Setting.updateSettings(configFile);
 	}
 
@@ -125,20 +129,14 @@ public class GuiSMSettings extends GuiScreen {
 	 */
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, "SmartCursor Settings", this.width / 2, this.height / 4 - 60 + 20, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Is SmartCursor Enabled:", this.width / 4, this.height / 4 - 60 + 50, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show current block damage:", this.width / 4, this.height / 4 - 60 + 50 + (btnH + fH)
-				* 1, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show mob health:", this.width / 4, this.height / 4 - 60 + 50 + (btnH + fH) * 2,
-				16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop information:", this.width / 4,
-				this.height / 4 - 60 + 50 + (btnH + fH) * 3, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop enchantments:", this.width / 4, this.height / 4 - 60 + 50 + (btnH + fH)
-				* 4, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop durability:", this.width / 4, this.height / 4 - 60 + 50 + (btnH + fH) * 5,
-				16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show XPorb information:", this.width / 4, this.height / 4 - 60 + 50 + (btnH + fH)
-				* 6, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "SmartCursor Settings", w / 2, h / 4 - 60 + 20, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Is SmartCursor Enabled:", w / 4, h / 4 - 60 + 50, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show current block damage:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 1, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show mob health:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 2, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show drop information:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 3, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show drop enchantments:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 4, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show drop durability:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 5, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show XPorb information:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 6, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 }

@@ -16,19 +16,19 @@ public class EntityPonter {
 		if (mc.renderViewEntity != null) {
 			if (mc.theWorld != null) {
 				mc.pointedEntity = null;
-				double d0 = (double) mc.playerController.getBlockReachDistance() * MODIFIER;
+				double d0 = /*(double) mc.playerController.getBlockReachDistance() * MODIFIER;*/ Setting.lookDistance;
 				mc.objectMouseOver = mc.renderViewEntity.rayTrace(d0, par1);
 				double d1 = d0;
 				Vec3 vec3 = mc.renderViewEntity.getPosition(par1);
-				if (mc.playerController.extendedReach()) {
-					d0 = 6.0D * MODIFIER;
-					d1 = 6.0D * MODIFIER;
-				} else {
-					if (d0 > 3.0D * MODIFIER) {
-						d1 = 3.0D * MODIFIER;
-					}
-					d0 = d1;
-				}
+				// if (mc.playerController.extendedReach()) {
+				// d0 = 6.0D * MODIFIER;
+				// d1 = 6.0D * MODIFIER;
+				// } else {
+				// if (d0 > 3.0D * MODIFIER) {
+				// d1 = 3.0D * MODIFIER;
+				// }
+				// d0 = d1;
+				// }
 				if (mc.objectMouseOver != null) {
 					d1 = mc.objectMouseOver.hitVec.distanceTo(vec3);
 				}
