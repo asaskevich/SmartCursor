@@ -17,10 +17,12 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemFood;
@@ -63,7 +65,7 @@ public class RenderHandler {
 		if (!Setting.isEnabled) return;
 		try {
 			if (event.type == RenderGameOverlayEvent.ElementType.TEXT) {
-				MovingObjectPosition mop = mc.renderViewEntity.rayTrace(200, 1F);
+				MovingObjectPosition mop = mc.renderViewEntity.rayTrace(15, 1F);
 				EntityPonter.getEntityLookingAt(1F);
 				// Block
 				if (mop != null) {
@@ -72,7 +74,7 @@ public class RenderHandler {
 					if (curBlockDamage != null) {
 						float damage = curBlockDamage.getFloat(Minecraft.getMinecraft().playerController);
 						if (!Block.isEqualTo(blockLookingAt, Blocks.air) && damage > 0) {
-							ScaledResolution res = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+							ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 							FontRenderer fontRender = mc.fontRenderer;
 							width = res.getScaledWidth();
 							height = res.getScaledHeight();
@@ -91,18 +93,91 @@ public class RenderHandler {
 							}
 						}
 					}
-				}
-				// Mob
-				if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit != null) {
-					Entity target = mc.objectMouseOver.entityHit;
-					if (target instanceof EntityLiving) {
-						EntityLiving entity = (EntityLiving) target;
-						ScaledResolution res = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+					if (mc.playerController.isNotCreative() && mc.objectMouseOver.entityHit == null
+							&& !Block.isEqualTo(blockLookingAt, Blocks.air) && Setting.showBlockInformation) {
+						int color = 0xFFFFFF;
+						int x = 4;
+						int y = 4;
+						List<String> list = new ArrayList<String>();
+						list.add(blockLookingAt.getLocalizedName());
+						int meta = mc.theWorld.getBlockMetadata(mop.blockX, mop.blockY, mop.blockZ);
+						if (blockLookingAt.canHarvestBlock(mc.thePlayer, meta)) list.add("You can harvest this block");
+						else list.add("Choose tool, that can harvest block");
+						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
 						width = res.getScaledWidth();
 						height = res.getScaledHeight();
 						mc.entityRenderer.setupOverlayRendering();
-						if (Setting.mobStyle != 3 && Setting.displayMobAdv) {
+						int maxW = 0;
+						for (int i = 0; i < list.size(); i++)
+							maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
+						Gui.drawRect(0, 0, maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0xFF555555);
+						Gui.drawRect(0, 0, maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0xFF212121);
+						for (int i = 0; i < list.size(); i++)
+							fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
+					}
+				}
+				// Mob
+				if (EntityPonter.pointedEntity != null) {
+					Entity target = EntityPonter.pointedEntity;
+					if (target instanceof EntityPlayer && Setting.showPlayerInformation) {
+						EntityPlayer player = (EntityPlayer) target;
+						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+						FontRenderer fontRender = mc.fontRenderer;
+						width = res.getScaledWidth();
+						height = res.getScaledHeight();
+						mc.entityRenderer.setupOverlayRendering();
+						int color = 0xFFFFFF;
+						int x = 4;
+						int y = 4;
+						List<String> list = new ArrayList<String>();
+						list.add("");
+						list.add("Score: " + player.getScore());
+						if (player.getBedLocation() == null) list.add("Has not slept in a bed.");
+						else list.add("Bed: " + String.format("[%d, %d]", player.getBedLocation().posX, player.getBedLocation().posZ));
+						list.add("Food level: " + player.getFoodStats().getFoodLevel() + "/20");
+						ItemStack[] items = player.getLastActiveItems();
+						boolean h = player.getHeldItem() != null;
+						for (ItemStack item : items)
+							if (item != null) h = true;
+						if (h) {
+							list.add("Equipment:");
+							list.add(" - " + player.getHeldItem().getDisplayName()
+									+ (player.getHeldItem().isItemEnchanted() ? " [Ench]" : ""));
+							for (ItemStack item : items)
+								if (item != null && item != player.getHeldItem())
+									list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? " [Ench]" : ""));
+						}
+						String text = String.format("%s: %d/%d", player.getDisplayName(), (int) player.getHealth(),
+								(int) player.getMaxHealth());
+						int maxW = fontRender.getStringWidth(text) + 16;
+						for (int i = 1; i < list.size(); i++)
+							maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
+						Gui.drawRect(0, 0, maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0xFF555555);
+						Gui.drawRect(0, 0, maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0xFF212121);
+						// Icons
+						mc.entityRenderer.setupOverlayRendering();
+						GL11.glPushMatrix();
+						GL11.glEnable(GL11.GL_BLEND);
+						mc.getTextureManager().bindTexture(iconSheet);
+						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+						GL11.glScalef(fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8);
+						mc.ingameGUI.drawTexturedModalRect(6 + fontRender.getStringWidth(text), 4, 34, 0, 9, 9);
+						mc.ingameGUI.drawTexturedModalRect(6 + fontRender.getStringWidth(text), 4, 52, 0, 8, 8);
+						GL11.glDisable(GL11.GL_BLEND);
+						GL11.glPopMatrix();
+						for (int i = 1; i < list.size(); i++)
+							fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
+						fontRender.drawStringWithShadow(text, x, y, color);
+					}
+					if (target instanceof EntityLiving) {
+						EntityLiving entity = (EntityLiving) target;
+						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+						FontRenderer fontRender = mc.fontRenderer;
+						width = res.getScaledWidth();
+						height = res.getScaledHeight();
+						mc.entityRenderer.setupOverlayRendering();
+						if (Setting.mobStyle != 3 && Setting.displayAdvInfoMob) {
 							int color = 0xFFFFFF;
 							int x = 4;
 							int y = 4;
@@ -110,14 +185,16 @@ public class RenderHandler {
 							list.add("");
 							if (entity instanceof EntityTameable) {
 								EntityTameable tame = (EntityTameable) entity;
-								if (tame.isTamed()) list.add("Tamed by " + tame.getOwnerName());
-								else list.add("Not tamed!");
+								if (tame.isTamed()) {
+									if (tame.getOwner() != null) list.add("Tamed by " + tame.getOwner().getCommandSenderName());
+									else list.add("Tamed!");
+								} else list.add("Not tamed!");
 								if (tame.isSitting()) list.add("Mob sitting");
 							}
 							if (entity instanceof EntityHorse) {
 								EntityHorse horse = (EntityHorse) entity;
 								list.add("Jump Strength: " + String.format("%.3f", horse.getHorseJumpStrength()));
-								if (horse.isTame()) list.add("Tamed by " + horse.getOwnerName());
+								if (horse.isTame()) list.add("Tamed!");
 								else list.add("Not tamed!");
 							}
 							if (entity instanceof EntityVillager) {
@@ -148,17 +225,27 @@ public class RenderHandler {
 								if (age.getGrowingAge() < 0)
 									list.add("Child, will grow after ~" + Math.abs(age.getGrowingAge() / 20) + " sec.");
 							}
-							if (entity instanceof EntityCreature) {
-								EntityCreature cre = (EntityCreature) entity;
-								if (cre.hasHome())
-									list.add("Mob has home at [" + cre.getHomePosition().posX + "] [" + cre.getHomePosition().posZ + "]");
-							}
 							if (entity.isBurning()) list.add("Mob is burning");
 							if (entity.isEntityInvulnerable()) list.add("Mob is invulnerable");
 							if (entity.isEntityUndead()) list.add("Mob is undead");
 							if (entity.isImmuneToFire()) list.add("Mob is immune to fire");
-							if (entity instanceof EntityMob) list.add("Mob is agressive!");
+							if (entity instanceof EntityMob || entity instanceof EntitySlime) list.add("Mob is agressive!");
 							else if (entity instanceof EntityAnimal) list.add("Mob is passive");
+							if (entity instanceof EntityCreature) {
+								EntityCreature cre = (EntityCreature) entity;
+								if (cre.hasHome())
+									list.add("Mob has home at [" + cre.getHomePosition().posX + "] [" + cre.getHomePosition().posZ + "]");
+								ItemStack[] items = cre.getLastActiveItems();
+								boolean h = false;
+								for (ItemStack item : items)
+									if (item != null) h = true;
+								if (h) {
+									list.add("Equipment:");
+									for (ItemStack item : items)
+										if (item != null)
+											list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? " [Ench]" : ""));
+								}
+							}
 							String text = String.format("%s: %d/%d", entity.getCommandSenderName(), (int) entity.getHealth(),
 									(int) entity.getMaxHealth());
 							int maxW = fontRender.getStringWidth(text) + 16;
@@ -234,9 +321,9 @@ public class RenderHandler {
 						}
 					}
 					// Item
-					if (target instanceof EntityItem && Setting.showDrop) {
+					if (target instanceof EntityItem && Setting.showDropInformation) {
 						EntityItem item = (EntityItem) target;
-						ScaledResolution res = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
 						width = res.getScaledWidth();
 						height = res.getScaledHeight();
@@ -245,7 +332,7 @@ public class RenderHandler {
 							int color = 0xFFFFFF;
 							String text = (int) item.getEntityItem().stackSize + "x " + item.getEntityItem().getDisplayName();
 							NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
-							if (enchs != null && Setting.showEnch) {
+							if (enchs != null && Setting.showEnchantments) {
 								for (int i = 0; i < enchs.tagCount(); i++) {
 									NBTTagCompound tag = enchs.getCompoundTagAt(i);
 									short id = tag.getShort("id");
@@ -260,7 +347,7 @@ public class RenderHandler {
 							int x = width / 2 - 4 - fontRender.getStringWidth(text);
 							int y = height / 2 - 2 - fontRender.FONT_HEIGHT;
 							fontRender.drawStringWithShadow(text, x, y, color);
-							if (Setting.showDur) {
+							if (Setting.showDurability) {
 								int maxDamage = item.getEntityItem().getMaxDamage();
 								int damage = item.getEntityItem().getItemDamage();
 								if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) {
@@ -337,7 +424,7 @@ public class RenderHandler {
 					// XPOrb
 					if (target instanceof EntityXPOrb && Setting.showXPOrb) {
 						EntityXPOrb xp = (EntityXPOrb) target;
-						ScaledResolution res = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
+						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
 						width = res.getScaledWidth();
 						height = res.getScaledHeight();
@@ -390,15 +477,15 @@ public class RenderHandler {
 
 	// ////////////////////////// Drop info
 	public void invertDropInfo() {
-		Setting.showDrop = !Setting.showDrop;
+		Setting.showDropInformation = !Setting.showDropInformation;
 	}
 
 	public void invertEnchInfo() {
-		Setting.showEnch = !Setting.showEnch;
+		Setting.showEnchantments = !Setting.showEnchantments;
 	}
 
 	public void invertDurInfo() {
-		Setting.showDur = !Setting.showDur;
+		Setting.showDurability = !Setting.showDurability;
 	}
 
 	public String getDropStyleName() {
@@ -418,7 +505,15 @@ public class RenderHandler {
 	}
 
 	public void invertMobInfo() {
-		Setting.displayMobAdv = !Setting.displayMobAdv;
+		Setting.displayAdvInfoMob = !Setting.displayAdvInfoMob;
+	}
+
+	public void invertBlockInfo() {
+		Setting.showBlockInformation = !Setting.showBlockInformation;
+	}
+
+	public void invertPlayerInfo() {
+		Setting.showPlayerInformation = !Setting.showPlayerInformation;
 	}
 
 	public void nextMaxHeart() {

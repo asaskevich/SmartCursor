@@ -5,12 +5,11 @@
   "description": "Useful utilities for ingame cursor",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/asaskevich/SmartCursor",
-  "updateUrl": "",
-  "authors": ["asaskevich"],
-  "credits": ["asaskevich"],
-  "logoFile": "",
+  "url": "https://mods.io/mods/1089-smartcursor",
+  "updateUrl": "https://mods.io/mods/1089/download",
+  "authorList": ["asaskevich"],
+  "parent": "",
   "screenshots": [],
   "dependencies": []
 }
-]
+] 

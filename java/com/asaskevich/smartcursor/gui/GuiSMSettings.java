@@ -21,6 +21,7 @@ public class GuiSMSettings extends GuiScreen {
 		this.configFile = f;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initGui() {
 		w = this.width;
 		h = this.height;
@@ -29,28 +30,33 @@ public class GuiSMSettings extends GuiScreen {
 		fH = this.fontRendererObj.FONT_HEIGHT;
 		this.buttonList.clear();
 		// Enable/Disable all mod
-		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2, btnW, btnH, Setting.isEnabled ? "ON"
+		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2, btnW, btnH, Setting.isEnabled ? "ON"
 				: "OFF"));
 		// Enable/Disable block damage and choose style
-		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 1, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 1, btnW, btnH,
 				renderHandler.getStyleName()));
 		// Enable/Disable mob indicator and choose style
-		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 2, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 2, btnW, btnH,
 				renderHandler.getMobStyleName()));
 		// Show Drop info
-		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 3, btnW, btnH,
-				Setting.showDrop ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 3, btnW, btnH,
+				Setting.showDropInformation ? "ON" : "OFF"));
 		// Show Drop enchs
-		this.buttonList.add(new GuiOptionButton(4, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 4, btnW, btnH,
-				Setting.showEnch ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(4, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 4, btnW, btnH,
+				Setting.showEnchantments ? "ON" : "OFF"));
 		// Show Drop durability
-		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 5, btnW, btnH,
-				Setting.showDur ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 5, btnW, btnH,
+				Setting.showDurability ? "ON" : "OFF"));
 		// Show XPorb
-		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 6, btnW, btnH,
+		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 6, btnW, btnH,
 				Setting.showXPOrb ? "ON" : "OFF"));
+		// Temp
+		this.buttonList.add(new GuiOptionButton(8, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 7, btnW, btnH,
+				Setting.showPlayerInformation ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(9, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 8, btnW, btnH,
+				Setting.showBlockInformation ? "ON" : "OFF"));
 		// Advanced options
-		this.buttonList.add(new GuiOptionButton(7, w - btnW - 10, h - btnH - 10, btnW, btnH, "ADVANCED"));
+		this.buttonList.add(new GuiOptionButton(7, w - btnW - 5, h - btnH - 5, btnW, btnH, "ADVANCED"));
 		// Small fix
 		for (int i = 1; i < this.buttonList.size(); i++) {
 			GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(i);
@@ -58,9 +64,9 @@ public class GuiSMSettings extends GuiScreen {
 		}
 		if (Setting.isEnabled) {
 			GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(4);
-			btn.enabled = Setting.showDrop;
+			btn.enabled = Setting.showDropInformation;
 			btn = (GuiOptionButton) this.buttonList.get(5);
-			btn.enabled = Setting.showDrop;
+			btn.enabled = Setting.showDropInformation;
 		}
 	}
 
@@ -74,9 +80,9 @@ public class GuiSMSettings extends GuiScreen {
 			}
 			if (Setting.isEnabled) {
 				GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(4);
-				btn.enabled = Setting.showDrop;
+				btn.enabled = Setting.showDropInformation;
 				btn = (GuiOptionButton) this.buttonList.get(5);
-				btn.enabled = Setting.showDrop;
+				btn.enabled = Setting.showDropInformation;
 			}
 		}
 		if (button.id == 1) {
@@ -91,23 +97,31 @@ public class GuiSMSettings extends GuiScreen {
 			renderHandler.invertDropInfo();
 			if (Setting.isEnabled) {
 				GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(4);
-				btn.enabled = Setting.showDrop;
+				btn.enabled = Setting.showDropInformation;
 				btn = (GuiOptionButton) this.buttonList.get(5);
-				btn.enabled = Setting.showDrop;
+				btn.enabled = Setting.showDropInformation;
 			}
-			button.displayString = Setting.showDrop ? "ON" : "OFF";
+			button.displayString = Setting.showDropInformation ? "ON" : "OFF";
 		}
 		if (button.id == 4) {
 			renderHandler.invertEnchInfo();
-			button.displayString = Setting.showEnch ? "ON" : "OFF";
+			button.displayString = Setting.showEnchantments ? "ON" : "OFF";
 		}
 		if (button.id == 5) {
 			renderHandler.invertDurInfo();
-			button.displayString = Setting.showDur ? "ON" : "OFF";
+			button.displayString = Setting.showDurability ? "ON" : "OFF";
 		}
 		if (button.id == 6) {
 			renderHandler.invertXPInfo();
 			button.displayString = Setting.showXPOrb ? "ON" : "OFF";
+		}
+		if (button.id == 8) {
+			renderHandler.invertPlayerInfo();
+			button.displayString = Setting.showPlayerInformation ? "ON" : "OFF";
+		}
+		if (button.id == 9) {
+			renderHandler.invertBlockInfo();
+			button.displayString = Setting.showBlockInformation ? "ON" : "OFF";
 		}
 		if (button.id == 7) {
 			mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler, configFile));
@@ -129,14 +143,16 @@ public class GuiSMSettings extends GuiScreen {
 	 */
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, "SmartCursor Settings", w / 2, h / 4 - 60 + 20, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Is SmartCursor Enabled:", w / 4, h / 4 - 60 + 50, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show current block damage:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 1, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show mob health:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 2, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop information:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 3, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop enchantments:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 4, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop durability:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 5, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show XPorb information:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 6, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "SmartCursor Settings", w / 2, (h / 7 - 10) / 2, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Is SmartCursor Enabled:", w / 4, h / 7 - 60 + 50, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show current block damage:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 1, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show mob health:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 2, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show drop information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 3, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show drop enchantments:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 4, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show drop durability:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 5, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show XPorb information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 6, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show player information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 7, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Show blocks information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 8, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 }

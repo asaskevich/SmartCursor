@@ -9,7 +9,7 @@ import net.minecraft.util.Vec3;
 
 public class EntityPonter {
 	static Minecraft mc = Minecraft.getMinecraft();
-	static Entity pointedEntity;
+	public static Entity pointedEntity;
 	final static double MODIFIER = 3.5D;
 
 	public static void getEntityLookingAt(float par1) {

@@ -5,11 +5,13 @@ import net.minecraftforge.common.config.Configuration;
 
 public class Setting {
 	public static boolean isEnabled;
-	public static boolean showDrop;
-	public static boolean showEnch;
-	public static boolean showDur;
+	public static boolean showDropInformation;
+	public static boolean showEnchantments;
+	public static boolean showDurability;
 	public static boolean showXPOrb;
-	public static boolean displayMobAdv;
+	public static boolean displayAdvInfoMob;
+	public static boolean showPlayerInformation;
+	public static boolean showBlockInformation;
 	public static int blockDamageStyle;
 	public static double maxHeartCount;
 	public static int mobStyle;
@@ -25,11 +27,13 @@ public class Setting {
 		maxHeartCount = config.get("smartCursor", "maxHeartCount", 15f).getDouble(15f);
 		lookDistance = config.get("smartCursor", "lookDistance", 20f).getDouble(20f);
 		isEnabled = config.get("smartCursor", "enabled", true).getBoolean(true);
-		showDrop = config.get("smartCursor", "showDrop", true).getBoolean(true);
-		showEnch = config.get("smartCursor", "showEnch", true).getBoolean(true);
-		showDur = config.get("smartCursor", "showDurability", true).getBoolean(true);
+		showDropInformation = config.get("smartCursor", "showDrop", true).getBoolean(true);
+		showEnchantments = config.get("smartCursor", "showEnch", true).getBoolean(true);
+		showDurability = config.get("smartCursor", "showDurability", true).getBoolean(true);
 		showXPOrb = config.get("smartCursor", "showXPOrb", true).getBoolean(true);
-		displayMobAdv = config.get("smartCursor", "mobAdvInfo", true).getBoolean(true);
+		displayAdvInfoMob = config.get("smartCursor", "mobAdvInfo", true).getBoolean(true);
+		showPlayerInformation = config.get("smartCursor", "showPlayer", true).getBoolean(true);
+		showBlockInformation = config.get("smartCursor", "showBlock", true).getBoolean(true);
 		config.save();
 	}
 
@@ -42,11 +46,13 @@ public class Setting {
 		config.get("smartCursor", "dropStyle", dropStyle).set(dropStyle);
 		config.get("smartCursor", "maxHeartCount", maxHeartCount).set(maxHeartCount);
 		config.get("smartCursor", "enabled", isEnabled).set(isEnabled);
-		config.get("smartCursor", "showDrop", showDrop).set(showDrop);
-		config.get("smartCursor", "showEnch", showEnch).set(showEnch);
-		config.get("smartCursor", "showDurability", showDur).set(showDur);
+		config.get("smartCursor", "showDrop", showDropInformation).set(showDropInformation);
+		config.get("smartCursor", "showEnch", showEnchantments).set(showEnchantments);
+		config.get("smartCursor", "showDurability", showDurability).set(showDurability);
 		config.get("smartCursor", "showXPOrb", showXPOrb).set(showXPOrb);
-		config.get("smartCursor", "mobAdvInfo", displayMobAdv).set(displayMobAdv);
+		config.get("smartCursor", "mobAdvInfo", displayAdvInfoMob).set(displayAdvInfoMob);
+		config.get("smartCursor", "showPlayer", showPlayerInformation).set(showPlayerInformation);
+		config.get("smartCursor", "showBlock", showBlockInformation).set(showBlockInformation);
 		config.save();
 	}
 }

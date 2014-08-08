@@ -21,6 +21,7 @@ public class GuiAdvancedSettings extends GuiScreen {
 		this.configFile = f;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initGui() {
 		w = this.width;
 		h = this.height;
@@ -30,7 +31,7 @@ public class GuiAdvancedSettings extends GuiScreen {
 		this.buttonList.clear();
 		// Enable/Disable block damage and choose style
 		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 0, btnW, btnH,
-				Setting.displayMobAdv ? "ON" : "OFF"));
+				Setting.displayAdvInfoMob ? "ON" : "OFF"));
 		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 1, btnW, btnH,
 				(int) Setting.maxHeartCount + "x"));
 		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 2, btnW, btnH,
@@ -42,7 +43,7 @@ public class GuiAdvancedSettings extends GuiScreen {
 	protected void actionPerformed(GuiButton button) {
 		if (button.id == 0) {
 			renderHandler.invertMobInfo();
-			button.displayString = Setting.displayMobAdv ? "ON" : "OFF";
+			button.displayString = Setting.displayAdvInfoMob ? "ON" : "OFF";
 		}
 		if (button.id == 1) {
 			renderHandler.nextMaxHeart();
