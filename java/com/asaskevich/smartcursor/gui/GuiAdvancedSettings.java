@@ -29,15 +29,20 @@ public class GuiAdvancedSettings extends GuiScreen {
 		btnH = this.fontRendererObj.FONT_HEIGHT * 2;
 		fH = this.fontRendererObj.FONT_HEIGHT;
 		this.buttonList.clear();
-		// Enable/Disable block damage and choose style
 		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 0, btnW, btnH,
 				Setting.displayAdvInfoMob ? "ON" : "OFF"));
-		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 1, btnW, btnH,
-				(int) Setting.maxHeartCount + "x"));
+		this.buttonList.add(new CustomGuiOptionSlider(1, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 1, btnW, btnH,
+				"HEART COUNT", 5F, 50F, 1F, (float) Setting.maxHeartCount, this));
 		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 2, btnW, btnH,
 				renderHandler.getDropStyleName()));
-		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 3, btnW, btnH,
-				(int) Setting.lookDistance + " meters"));
+		this.buttonList.add(new CustomGuiOptionSlider(3, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 3, btnW, btnH,
+				"DISTANCE", 1F, 100F, 1F, (float) Setting.lookDistance, this));
+		this.buttonList.add(new CustomGuiOptionSlider(4, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 4, btnW, btnH,
+				"TRANSPARENT", 0F, 255F, 1F, Setting.transparent, this));
+		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 5, btnW, btnH,
+				renderHandler.getPlayerStyleName()));
+		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, h / 4 - 60 + 50 - btnH / 2 + (btnH + fH / 2) * 6, btnW, btnH,
+				Setting.showTooltipInRightCorner ? "RIGHT CORNER" : "LEFT CORNER"));
 	}
 
 	protected void actionPerformed(GuiButton button) {
@@ -45,17 +50,17 @@ public class GuiAdvancedSettings extends GuiScreen {
 			renderHandler.invertMobInfo();
 			button.displayString = Setting.displayAdvInfoMob ? "ON" : "OFF";
 		}
-		if (button.id == 1) {
-			renderHandler.nextMaxHeart();
-			button.displayString = (int) Setting.maxHeartCount + "x";
-		}
 		if (button.id == 2) {
 			renderHandler.setDropNextStyle();
 			button.displayString = renderHandler.getDropStyleName();
 		}
-		if (button.id == 3) {
-			renderHandler.nextLookDistance();
-			button.displayString = (int) Setting.lookDistance + " meters";
+		if (button.id == 5) {
+			renderHandler.setPlayerNextStyle();
+			button.displayString = renderHandler.getPlayerStyleName();
+		}
+		if (button.id == 6) {
+			renderHandler.invertTooltipPlaceInfo();
+			button.displayString = Setting.showTooltipInRightCorner ? "RIGHT CORNER" : "LEFT CORNER";
 		}
 		Setting.updateSettings(configFile);
 	}
@@ -81,6 +86,22 @@ public class GuiAdvancedSettings extends GuiScreen {
 				16777215);
 		this.drawCenteredString(this.fontRendererObj, "Display drop info:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 2, 16777215);
 		this.drawCenteredString(this.fontRendererObj, "Find mob looking at in:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 3, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Tooltip transparent:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 4, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Style of player info:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 5, 16777215);
+		this.drawCenteredString(this.fontRendererObj, "Display tooltip in:", w / 4, h / 4 - 60 + 50 + (btnH + fH / 2) * 6, 16777215);
 		super.drawScreen(par1, par2, par3);
+	}
+
+	public void updateSettings(CustomGuiOptionSlider slider) {
+		if (slider.id == 1) {
+			Setting.maxHeartCount = slider.value;
+		}
+		if (slider.id == 3) {
+			Setting.lookDistance = slider.value;
+		}
+		if (slider.id == 4) {
+			Setting.transparent = (int) slider.value;
+		}
+		Setting.updateSettings(configFile);
 	}
 }

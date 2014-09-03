@@ -111,8 +111,11 @@ public class RenderHandler {
 						int maxW = 0;
 						for (int i = 0; i < list.size(); i++)
 							maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
-						Gui.drawRect(0, 0, maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0xFF555555);
-						Gui.drawRect(0, 0, maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0xFF212121);
+						if (Setting.showTooltipInRightCorner) x = width - maxW;
+						RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555,
+								Setting.transparent);
+						RenderHelper
+								.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121, Setting.transparent);
 						for (int i = 0; i < list.size(); i++)
 							fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
 					}
@@ -128,47 +131,103 @@ public class RenderHandler {
 						height = res.getScaledHeight();
 						mc.entityRenderer.setupOverlayRendering();
 						int color = 0xFFFFFF;
-						int x = 4;
-						int y = 4;
-						List<String> list = new ArrayList<String>();
-						list.add("");
-						list.add("Score: " + player.getScore());
-						if (player.getBedLocation() == null) list.add("Has not slept in a bed.");
-						else list.add("Bed: " + String.format("[%d, %d]", player.getBedLocation().posX, player.getBedLocation().posZ));
-						list.add("Food level: " + player.getFoodStats().getFoodLevel() + "/20");
-						ItemStack[] items = player.getLastActiveItems();
-						boolean h = player.getHeldItem() != null;
-						for (ItemStack item : items)
-							if (item != null) h = true;
-						if (h) {
-							list.add("Equipment:");
-							list.add(" - " + player.getHeldItem().getDisplayName()
-									+ (player.getHeldItem().isItemEnchanted() ? " [Ench]" : ""));
+						if (Setting.playerStyle == 0) {
+							int x = 4;
+							int y = 4;
+							List<String> list = new ArrayList<String>();
+							list.add("");
+							list.add("Score: " + player.getScore());
+							if (player.getBedLocation() == null) list.add("Has not slept in a bed.");
+							else list.add("Bed: " + String.format("[%d, %d]", player.getBedLocation().posX, player.getBedLocation().posZ));
+							list.add("Food level: " + player.getFoodStats().getFoodLevel() + "/20");
+							ItemStack[] items = player.getLastActiveItems();
+							boolean h = player.getHeldItem() != null;
 							for (ItemStack item : items)
-								if (item != null && item != player.getHeldItem())
-									list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? " [Ench]" : ""));
+								if (item != null) h = true;
+							if (h) {
+								list.add("Equipment:");
+								list.add(" - " + player.getHeldItem().getDisplayName()
+										+ (player.getHeldItem().isItemEnchanted() ? " [Ench]" : ""));
+								for (ItemStack item : items)
+									if (item != null && item != player.getHeldItem())
+										list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? " [Ench]" : ""));
+							}
+							String text = String.format("%s: %d/%d", player.getDisplayName(), (int) player.getHealth(),
+									(int) player.getMaxHealth());
+							int maxW = fontRender.getStringWidth(text) + 16;
+							for (int i = 1; i < list.size(); i++)
+								maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
+							if (Setting.showTooltipInRightCorner) x = width - maxW;
+							RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555,
+									Setting.transparent);
+							RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121,
+									Setting.transparent);
+							// Icons
+							mc.entityRenderer.setupOverlayRendering();
+							GL11.glPushMatrix();
+							GL11.glEnable(GL11.GL_BLEND);
+							mc.getTextureManager().bindTexture(iconSheet);
+							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+							GL11.glScalef(fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8);
+							mc.ingameGUI.drawTexturedModalRect(x + 4 + fontRender.getStringWidth(text), 4, 34, 0, 9, 9);
+							mc.ingameGUI.drawTexturedModalRect(x + 4 + fontRender.getStringWidth(text), 4, 52, 0, 8, 8);
+							GL11.glDisable(GL11.GL_BLEND);
+							GL11.glPopMatrix();
+							for (int i = 1; i < list.size(); i++)
+								fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
+							fontRender.drawStringWithShadow(text, x, y, color);
 						}
-						String text = String.format("%s: %d/%d", player.getDisplayName(), (int) player.getHealth(),
-								(int) player.getMaxHealth());
-						int maxW = fontRender.getStringWidth(text) + 16;
-						for (int i = 1; i < list.size(); i++)
-							maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
-						Gui.drawRect(0, 0, maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0xFF555555);
-						Gui.drawRect(0, 0, maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0xFF212121);
-						// Icons
-						mc.entityRenderer.setupOverlayRendering();
-						GL11.glPushMatrix();
-						GL11.glEnable(GL11.GL_BLEND);
-						mc.getTextureManager().bindTexture(iconSheet);
-						GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-						GL11.glScalef(fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8);
-						mc.ingameGUI.drawTexturedModalRect(6 + fontRender.getStringWidth(text), 4, 34, 0, 9, 9);
-						mc.ingameGUI.drawTexturedModalRect(6 + fontRender.getStringWidth(text), 4, 52, 0, 8, 8);
-						GL11.glDisable(GL11.GL_BLEND);
-						GL11.glPopMatrix();
-						for (int i = 1; i < list.size(); i++)
-							fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
-						fontRender.drawStringWithShadow(text, x, y, color);
+						if (Setting.playerStyle == 1) {
+							color = 0xFFFFFF;
+							int x = width / 2 + 4;
+							int y = height / 2 - 2 - fontRender.FONT_HEIGHT;
+							String text = String.format("%.0fx", player.getHealth());
+							String mobName = player.getCommandSenderName();
+							fontRender.drawStringWithShadow(text, x, y, color);
+							fontRender.drawStringWithShadow(mobName, width / 2 + 4, height / 2 + 2, color);
+							GL11.glPushMatrix();
+							GL11.glEnable(GL11.GL_BLEND);
+							mc.getTextureManager().bindTexture(iconSheet);
+							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+							GL11.glScalef(fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8);
+							mc.ingameGUI.drawTexturedModalRect(x + 4 + fontRender.getStringWidth(text), y, 52, 0, 8, 8);
+							GL11.glDisable(GL11.GL_BLEND);
+							GL11.glPopMatrix();
+						} else if (Setting.playerStyle == 2) {
+							float f = player.getMaxHealth();
+							float d = player.getHealth();
+							String mobName = player.getCommandSenderName();
+							int x = width / 2 - 25;
+							int y = height / 2 + fontRender.FONT_HEIGHT * 2 + 4;
+							Gui.drawRect(x - 1, y - 1, x + 52, y + fontRender.FONT_HEIGHT / 2 + 1, 0xFF00DD00);
+							Gui.drawRect(x, y, x + (int) (d / f * 50), y + fontRender.FONT_HEIGHT / 2, 0xFFDD0000);
+							fontRender.drawStringWithShadow(mobName, width / 2 - fontRender.getStringWidth(mobName) / 2, height / 2
+									+ fontRender.FONT_HEIGHT + 2, 0xFFFFFF);
+						} else if (Setting.playerStyle == 3) {
+							int cnt = (int) player.getHealth();
+							int cntMax = (int) player.getMaxHealth();
+							if (player.getMaxHealth() > Setting.maxHeartCount) {
+								float d = player.getMaxHealth() / (float) Setting.maxHeartCount;
+								cnt = (int) (player.getHealth() / d);
+								cntMax = (int) (player.getMaxHealth() / d);
+							}
+							String mobName = player.getCommandSenderName();
+							int x = width / 2 - (cntMax * 5) / 2;
+							int y = height / 2 + fontRender.FONT_HEIGHT * 2 + 4;
+							fontRender.drawStringWithShadow(mobName, width / 2 - fontRender.getStringWidth(mobName) / 2, height / 2
+									+ fontRender.FONT_HEIGHT + 2, 0xFFFFFF);
+							GL11.glPushMatrix();
+							GL11.glEnable(GL11.GL_BLEND);
+							mc.getTextureManager().bindTexture(iconSheet);
+							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+							GL11.glScalef(fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8);
+							for (int i = 0; i < cntMax; i++) {
+								mc.ingameGUI.drawTexturedModalRect(x + i * 5, y, 34, 0, 9, 9);
+								if (i < cnt) mc.ingameGUI.drawTexturedModalRect(x + i * 5, y, 52, 0, 8, 8);
+							}
+							GL11.glDisable(GL11.GL_BLEND);
+							GL11.glPopMatrix();
+						}
 					}
 					if (target instanceof EntityLiving) {
 						EntityLiving entity = (EntityLiving) target;
@@ -251,8 +310,12 @@ public class RenderHandler {
 							int maxW = fontRender.getStringWidth(text) + 16;
 							for (int i = 1; i < list.size(); i++)
 								maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
-							Gui.drawRect(0, 0, maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0xFF555555);
-							Gui.drawRect(0, 0, maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0xFF212121);
+							if (Setting.showTooltipInRightCorner) x = width - maxW;
+							// TODO
+							RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555,
+									Setting.transparent);
+							RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121,
+									Setting.transparent);
 							// Icons
 							mc.entityRenderer.setupOverlayRendering();
 							GL11.glPushMatrix();
@@ -260,8 +323,8 @@ public class RenderHandler {
 							mc.getTextureManager().bindTexture(iconSheet);
 							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 							GL11.glScalef(fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8, fontRender.FONT_HEIGHT / 8);
-							mc.ingameGUI.drawTexturedModalRect(6 + fontRender.getStringWidth(text), 4, 34, 0, 9, 9);
-							mc.ingameGUI.drawTexturedModalRect(6 + fontRender.getStringWidth(text), 4, 52, 0, 8, 8);
+							mc.ingameGUI.drawTexturedModalRect(x + 4 + fontRender.getStringWidth(text), 4, 34, 0, 9, 9);
+							mc.ingameGUI.drawTexturedModalRect(x + 4 + fontRender.getStringWidth(text), 4, 52, 0, 8, 8);
 							GL11.glDisable(GL11.GL_BLEND);
 							GL11.glPopMatrix();
 							for (int i = 1; i < list.size(); i++)
@@ -414,8 +477,11 @@ public class RenderHandler {
 							int maxW = fontRender.getStringWidth(text) + 16;
 							for (int i = 1; i < list.size(); i++)
 								maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
-							Gui.drawRect(0, 0, maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0xFF555555);
-							Gui.drawRect(0, 0, maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0xFF212121);
+							if (Setting.showTooltipInRightCorner) x = width - maxW;
+							RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555,
+									Setting.transparent);
+							RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121,
+									Setting.transparent);
 							for (int i = 1; i < list.size(); i++)
 								fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
 							fontRender.drawStringWithShadow(text, x, y, color);
@@ -499,6 +565,19 @@ public class RenderHandler {
 		Setting.dropStyle %= 2;
 	}
 
+	public String getPlayerStyleName() {
+		if (Setting.playerStyle == 0) return "IN CORNER";
+		if (Setting.playerStyle == 1) return "NUMERIC";
+		if (Setting.playerStyle == 2) return "PROGRESS BAR";
+		if (Setting.playerStyle == 3) return "ICONS";
+		return "";
+	}
+
+	public void setPlayerNextStyle() {
+		Setting.playerStyle++;
+		Setting.playerStyle %= 4;
+	}
+
 	// showXPOrb
 	public void invertXPInfo() {
 		Setting.showXPOrb = !Setting.showXPOrb;
@@ -516,15 +595,7 @@ public class RenderHandler {
 		Setting.showPlayerInformation = !Setting.showPlayerInformation;
 	}
 
-	public void nextMaxHeart() {
-		Setting.maxHeartCount += 5;
-		Setting.maxHeartCount %= 55;
-		if (Setting.maxHeartCount < 10) Setting.maxHeartCount = 10;
-	}
-
-	public void nextLookDistance() {
-		Setting.lookDistance += 5;
-		Setting.lookDistance %= 95;
-		if (Setting.lookDistance < 10) Setting.lookDistance = 10;
+	public void invertTooltipPlaceInfo() {
+		Setting.showTooltipInRightCorner = !Setting.showTooltipInRightCorner;
 	}
 }
