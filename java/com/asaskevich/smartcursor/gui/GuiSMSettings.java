@@ -4,6 +4,7 @@ import java.io.File;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.StatCollector;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.utils.Setting;
 
@@ -16,9 +17,9 @@ public class GuiSMSettings extends GuiScreen {
 	private int btnH;
 	private int fH;
 
-	public GuiSMSettings(RenderHandler r, File f) {
-		this.renderHandler = r;
-		this.configFile = f;
+	public GuiSMSettings(RenderHandler renderHandler, File configFile) {
+		this.renderHandler = renderHandler;
+		this.configFile = configFile;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -143,16 +144,26 @@ public class GuiSMSettings extends GuiScreen {
 	 */
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, "SmartCursor Settings", w / 2, (h / 7 - 10) / 2, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Is SmartCursor Enabled:", w / 4, h / 7 - 60 + 50, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show current block damage:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 1, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show mob health:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 2, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 3, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop enchantments:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 4, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show drop durability:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 5, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show XPorb information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 6, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show player information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 7, 16777215);
-		this.drawCenteredString(this.fontRendererObj, "Show blocks information:", w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 8, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.title"), w / 2, (h / 7 - 10) / 2,
+				16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.isEnabled"), w / 4, h / 7 - 60 + 50,
+				16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showBlockDamage"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 1, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showMobHealth"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 2, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDropInfo"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 3, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDropEnchantments"), w / 4, h / 7
+				- 60 + 50 + (btnH + fH / 4) * 4, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDurability"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 5, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showXPorbInfo"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 6, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showPlayerInfo"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 7, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showBlockInfo"), w / 4, h / 7 - 60
+				+ 50 + (btnH + fH / 4) * 8, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 }

@@ -1,0 +1,11 @@
+# Options GUI
+smartcursor.gui.title=SmartCursor Settings
+smartcursor.gui.isEnabled=Is Enabled:
+smartcursor.gui.showBlockDamage=Show current block damage:
+smartcursor.gui.showMobHealth=Show mob health:
+smartcursor.gui.showDropInfo=Show drop information:
+smartcursor.gui.showDropEnchantments=Show drop enchantments:
+smartcursor.gui.showDurability=Show drop durability:
+smartcursor.gui.showXPorbInfo=Show XPorb information:
+smartcursor.gui.showPlayerInfo=Show player information:
+smartcursor.gui.showBlockInfo=Show blocks information:

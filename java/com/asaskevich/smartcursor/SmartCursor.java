@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, acceptedMinecraftVersions = "[1.7.10)", dependencies = "required-after:Forge@[10.13.0.1179,))
+@Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, canBeDeactivated = true)
 @SideOnly(Side.CLIENT)
 public class SmartCursor {
 	public static CommonProxy proxy;

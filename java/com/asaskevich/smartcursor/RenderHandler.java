@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityMob;
@@ -35,6 +36,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 import com.asaskevich.smartcursor.utils.EntityPonter;
 import com.asaskevich.smartcursor.utils.Setting;
+import com.asaskevich.smartcursor.utils.Utils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderHandler {
@@ -101,6 +103,7 @@ public class RenderHandler {
 						List<String> list = new ArrayList<String>();
 						list.add(blockLookingAt.getLocalizedName());
 						int meta = mc.theWorld.getBlockMetadata(mop.blockX, mop.blockY, mop.blockZ);
+						
 						if (blockLookingAt.canHarvestBlock(mc.thePlayer, meta)) list.add("You can harvest this block");
 						else list.add("Choose tool, that can harvest block");
 						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
@@ -231,6 +234,7 @@ public class RenderHandler {
 					}
 					if (target instanceof EntityLiving) {
 						EntityLiving entity = (EntityLiving) target;
+						Utils.getPoisons(entity);
 						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
 						width = res.getScaledWidth();
@@ -252,7 +256,10 @@ public class RenderHandler {
 							}
 							if (entity instanceof EntityHorse) {
 								EntityHorse horse = (EntityHorse) entity;
-								list.add("Jump Strength: " + String.format("%.3f", horse.getHorseJumpStrength()));
+								list.add("Jump Strength: " + String.format("%.3f", Utils.round(horse.getHorseJumpStrength(), 4)));
+								list.add("Speed: "
+										+ String.format("%.3f", Utils.round(horse.getEntityAttribute(SharedMonsterAttributes.movementSpeed)
+												.getAttributeValue(), 4)));
 								if (horse.isTame()) list.add("Tamed!");
 								else list.add("Not tamed!");
 							}
@@ -277,6 +284,9 @@ public class RenderHandler {
 									default:
 										list.add("Profession: Generic");
 										break;
+								}
+								if (villager.isTrading()) {
+									list.add("Wait, he is trading...");
 								}
 							}
 							if (entity instanceof EntityAgeable) {
