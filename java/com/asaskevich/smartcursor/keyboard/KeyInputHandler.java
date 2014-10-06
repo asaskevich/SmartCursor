@@ -1,6 +1,5 @@
 package com.asaskevich.smartcursor.keyboard;
 
-import java.io.File;
 import net.minecraft.client.Minecraft;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.gui.GuiSMSettings;
@@ -11,8 +10,8 @@ public class KeyInputHandler {
 	private Minecraft mc = Minecraft.getMinecraft();
 	private GuiSMSettings gui;
 
-	public KeyInputHandler(RenderHandler r, File file) {
-		this.gui = new GuiSMSettings(r, file);
+	public KeyInputHandler(RenderHandler r) {
+		this.gui = new GuiSMSettings(r);
 	}
 
 	@SubscribeEvent

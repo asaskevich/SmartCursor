@@ -1,25 +1,23 @@
 package com.asaskevich.smartcursor.gui;
 
-import java.io.File;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.StatCollector;
 import com.asaskevich.smartcursor.RenderHandler;
+import com.asaskevich.smartcursor.SmartCursor;
 import com.asaskevich.smartcursor.utils.Setting;
 
 public class GuiSMSettings extends GuiScreen {
 	private RenderHandler renderHandler;
-	private File configFile;
 	private int w;
 	private int h;
 	private int btnW;
 	private int btnH;
 	private int fH;
 
-	public GuiSMSettings(RenderHandler renderHandler, File configFile) {
+	public GuiSMSettings(RenderHandler renderHandler) {
 		this.renderHandler = renderHandler;
-		this.configFile = configFile;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -125,9 +123,10 @@ public class GuiSMSettings extends GuiScreen {
 			button.displayString = Setting.showBlockInformation ? "ON" : "OFF";
 		}
 		if (button.id == 7) {
-			mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler, configFile));
+			mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler));
 		}
-		Setting.updateSettings(configFile);
+		Setting.updateSettings(SmartCursor.config);
+		Setting.syncConfig(SmartCursor.config);
 	}
 
 	/**

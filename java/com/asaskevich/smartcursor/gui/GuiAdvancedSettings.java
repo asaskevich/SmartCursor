@@ -1,24 +1,22 @@
 package com.asaskevich.smartcursor.gui;
 
-import java.io.File;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import com.asaskevich.smartcursor.RenderHandler;
+import com.asaskevich.smartcursor.SmartCursor;
 import com.asaskevich.smartcursor.utils.Setting;
 
 public class GuiAdvancedSettings extends GuiScreen {
 	private RenderHandler renderHandler;
-	private File configFile;
 	private int w;
 	private int h;
 	private int btnW;
 	private int btnH;
 	private int fH;
 
-	public GuiAdvancedSettings(RenderHandler r, File f) {
+	public GuiAdvancedSettings(RenderHandler r) {
 		this.renderHandler = r;
-		this.configFile = f;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,7 +60,8 @@ public class GuiAdvancedSettings extends GuiScreen {
 			renderHandler.invertTooltipPlaceInfo();
 			button.displayString = Setting.showTooltipInRightCorner ? "RIGHT CORNER" : "LEFT CORNER";
 		}
-		Setting.updateSettings(configFile);
+		Setting.updateSettings(SmartCursor.config);
+		Setting.syncConfig(SmartCursor.config);
 	}
 
 	/**
@@ -102,6 +101,7 @@ public class GuiAdvancedSettings extends GuiScreen {
 		if (slider.id == 4) {
 			Setting.transparent = (int) slider.value;
 		}
-		Setting.updateSettings(configFile);
+		Setting.updateSettings(SmartCursor.config);
+		Setting.syncConfig(SmartCursor.config);
 	}
 }
