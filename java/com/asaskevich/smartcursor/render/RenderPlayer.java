@@ -8,6 +8,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.RenderHelper;
@@ -36,17 +37,17 @@ public class RenderPlayer {
 			int y = 4;
 			List<String> list = new ArrayList<String>();
 			list.add("");
-			list.add("Score: " + player.getScore());
-			if (player.getTeam() != null) list.add("Team: " + player.getTeam().getRegisteredName());
+			list.add(StatCollector.translateToLocal("smartcursor.player.score") + player.getScore());
+			if (player.getTeam() != null) list.add(StatCollector.translateToLocal("smartcursor.player.team") + player.getTeam().getRegisteredName());
 			ItemStack[] items = player.getLastActiveItems();
 			boolean h = player.getHeldItem() != null;
 			for (ItemStack item : items)
 				if (item != null) h = true;
 			if (h) {
-				list.add("Equipment:");
-				list.add(" - " + player.getHeldItem().getDisplayName() + (player.getHeldItem().isItemEnchanted() ? " [Ench]" : ""));
+				list.add(StatCollector.translateToLocal("smartcursor.player.equipment"));
+				list.add(" - " + player.getHeldItem().getDisplayName() + (player.getHeldItem().isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 				for (ItemStack item : items)
-					if (item != null && item != player.getHeldItem()) list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? " [Ench]" : ""));
+					if (item != null && item != player.getHeldItem()) list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 			}
 			String text = String.format("%s: %d/%d", player.getDisplayName(), (int) player.getHealth(), (int) player.getMaxHealth());
 			int maxW = fontRender.getStringWidth(text) + 16;

@@ -1,0 +1,82 @@
+# Options GUI
+smartcursor.gui.title=Настройки SmartCursor
+smartcursor.gui.isEnabled=Активирован ли мод:
+smartcursor.gui.showBlockDamage=Отображ. разрушения блока:
+smartcursor.gui.showMobHealth=Отображ. здоровья мобов:
+smartcursor.gui.showDropInfo=Отображ. информации о дропе:
+smartcursor.gui.showDropEnchantments=Отображ. зачарований для дропа:
+smartcursor.gui.showDurability=Отображ. износа инструментов:
+smartcursor.gui.showXPorbInfo=Отображ. информации для шариков опыта:
+smartcursor.gui.showPlayerInfo=Отображ. информации об игроках:
+smartcursor.gui.showBlockInfo=Отображ. информации о блоках:
+smartcursor.gui.advanced=Дополнительно
+# Advanced GUI
+smartcursor.gui.advancedTitle=Дополнительные настройки
+smartcursor.gui.showAdvancedInfoMobs=Отображ. доп. информацию о мобах:
+smartcursor.gui.maxHeartCount=Макс. число сердечек в один ряд:
+smartcursor.gui.showAdvancedDropInfo=Отображ. доп. информацию о дропе:
+smartcursor.gui.lookingDistance=Искать мобов на расстоянии:
+smartcursor.gui.transparent=Прозрачность табличек:
+smartcursor.gui.styleOfPlayerInfo=Стиль отображения инф. об игроке:
+smartcursor.gui.tooltipPosition=Положение таблички:
+smartcursor.gui.heartCount=ЧИСЛО СЕРДЕЧЕК
+smartcursor.gui.distance=РАССТОЯНИЕ
+smartcursor.gui.transparent=ПРОЗРАЧНОСТЬ
+smartcursor.gui.rightCorner=ПРАВЫЙ УГОЛ
+smartcursor.gui.leftCorner=ЛЕВЫЙ УГОЛ
+smartcursor.gui.tooltipDelta=ВРЕМЯ ОТОБРАЖЕНИЯ
+smartcursor.gui.displayTime=Отображать в течение времени:
+# Items
+smartcursor.item.enchBook=Книга имеет след. зачарования:
+smartcursor.item.healAmount=Восст. единиц голода: 
+smartcursor.item.useInPotions=Возможный ингредиент зелий
+smartcursor.item.wolfsMeat=Этим можно кормить волков!
+smartcursor.item.enchItem=Предмет зачарован след. зачарованиями:
+smartcursor.item.count=Кол-во: 
+smartcursor.item.hasEffect=Предмет имеет эффекты
+smartcursor.item.hasSubtypes=Предмет имеет подтипы
+smartcursor.item.enchantable=Можно зачаровать
+smartcursor.item.isDamaged=Предмет поврежден!
+smartcursor.item.stackable=Можно стакать
+smartcursor.item.in= в 
+smartcursor.item.items= элементов
+# Blocks
+smartcursor.block.harvestBlock=Вы можете собрать этот блок
+smartcursor.block.cantHarvestBlock=Выберите другой предмет для сбора этого блока
+# Players
+smartcursor.player.score=Результат: 
+smartcursor.player.equipment=Одет в:
+smartcursor.player.team=Команда: 
+smartcursor.player.ench= [Зачар]
+# Entity
+smartcursor.mob.tamedBy=Приручен игроком 
+smartcursor.mob.tamed=Приручен!
+smartcursor.mob.notTamed=Не приручен!
+smartcursor.mob.isSitting=Моб сидит
+smartcursor.mob.horseSpeed=Скорость: 
+smartcursor.mob.jumpStrength=Сила прыжка: 
+smartcursor.mob.trade=Подождите, он торгует...
+smartcursor.mob.profession_0=Профессия: Фермер
+smartcursor.mob.profession_1=Профессия: Библиотекарь
+smartcursor.mob.profession_2=Профессия: Жрец
+smartcursor.mob.profession_3=Профессия: Кузнец
+smartcursor.mob.profession_4=Профессия: Мясник
+smartcursor.mob.profession=Профессия: Основная
+smartcursor.mob.isWet=Моб в воде/под дождем
+smartcursor.mob.isSprinting=Моб бежит
+smartcursor.mob.isRiding=Моб едет на другом мобе
+smartcursor.mob.isBurning=Моб горит
+smartcursor.mob.isEntityInvulnerable=Моб неуязвим
+smartcursor.mob.isUndead=Нежить
+smartcursor.mob.isImmuneToFire=Моб устойчив к огню
+smartcursor.mob.isAgressive=Моб агресивен!
+smartcursor.mob.isPassive=Моб пассивен
+smartcursor.mob.child=Детеныш, вырастет через ~
+smartcursor.mob.seconds= сек.
+# Styles, positions
+smartcursor.pos.inCorner=В УГЛУ
+smartcursor.pos.center=ОКОЛО КУРСОРА
+smartcursor.style.numeric=ЧИСЛОВОЙ
+smartcursor.style.icons=ЗНАЧКИ
+smartcursor.style.progressBar=ПРОГРЕССБАР
+smartcursor.style.percents=В ПРОЦЕНТАХ

@@ -24,6 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import com.asaskevich.smartcursor.render.RenderEntity;
 import com.asaskevich.smartcursor.render.RenderPlayer;
@@ -100,8 +101,8 @@ public class RenderHandler {
 						ItemStack stack = new ItemStack(Item.getItemFromBlock(blockLookingAt));
 						stack.setItemDamage(meta);
 						list.add(stack.getDisplayName());
-						if (blockLookingAt.canHarvestBlock(mc.thePlayer, meta)) list.add("You can harvest this block");
-						else list.add("Choose tool, that can harvest this block");
+						if (blockLookingAt.canHarvestBlock(mc.thePlayer, meta)) list.add(StatCollector.translateToLocal("smartcursor.block.harvestBlock"));
+						else list.add(StatCollector.translateToLocal("smartcursor.block.cantHarvestBlock"));
 						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
 						width = res.getScaledWidth();
@@ -127,8 +128,7 @@ public class RenderHandler {
 					if (target instanceof EntityLiving) {
 						EntityLiving entity = (EntityLiving) target;
 						renderEntity.render(entity, this);
-					}
-					// Item
+					} // Item
 					if (target instanceof EntityItem && Setting.showDropInformation) {
 						EntityItem item = (EntityItem) target;
 						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
@@ -179,7 +179,7 @@ public class RenderHandler {
 							else text = it.getDisplayName();
 							if (it.getItem() instanceof ItemEnchantedBook) {
 								ItemEnchantedBook book = (ItemEnchantedBook) it.getItem();
-								list.add("Book has following enchantments:");
+								list.add(StatCollector.translateToLocal("smartcursor.item.enchBook"));
 								NBTTagList nbttaglist = book.func_92110_g(it);
 								if (nbttaglist != null) {
 									for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -193,18 +193,20 @@ public class RenderHandler {
 							}
 							if (it.getItem() instanceof ItemFood) {
 								ItemFood food = (ItemFood) it.getItem();
-								list.add("Heal amount: " + food.func_150905_g(it));
-								if (food.isWolfsFavoriteMeat()) list.add("Wolfs favorite meat!");
+								list.add(StatCollector.translateToLocal("smartcursor.item.healAmount") + food.func_150905_g(it));
+								if (food.isWolfsFavoriteMeat()) list.add(StatCollector.translateToLocal("smartcursor.item.wolfsMeat"));
 							}
-							if (it.getItem().isPotionIngredient(it)) list.add("Possible to use in potions");
-							list.add("Count: " + it.stackSize);
-							if (it.isStackable()) list.add("Stackable" + (it.getMaxStackSize() > 1 ? " in " + it.getMaxStackSize() + " items" : ""));
-							if (it.isItemDamaged()) list.add("Item damaged");
-							if (it.isItemEnchantable()) list.add("Item enchantable");
-							if (it.getHasSubtypes()) list.add("Item has subtypes");
-							if (it.hasEffect()) list.add("Item has effect");
+							if (it.getItem().isPotionIngredient(it)) list.add(StatCollector.translateToLocal("smartcursor.item.useInPotions"));
+							list.add(StatCollector.translateToLocal("smartcursor.item.count") + it.stackSize);
+							if (it.isStackable())
+								list.add(StatCollector.translateToLocal("smartcursor.item.stackable")
+										+ (it.getMaxStackSize() > 1 ? StatCollector.translateToLocal("smartcursor.item.in") + it.getMaxStackSize() + StatCollector.translateToLocal("smartcursor.item.items") : ""));
+							if (it.isItemDamaged()) list.add(StatCollector.translateToLocal("smartcursor.item.isDamaged"));
+							if (it.isItemEnchantable()) list.add(StatCollector.translateToLocal("smartcursor.item.enchantable"));
+							if (it.getHasSubtypes()) list.add(StatCollector.translateToLocal("smartcursor.item.hasSubtypes"));
+							if (it.hasEffect()) list.add(StatCollector.translateToLocal("smartcursor.item.hasEffect"));
 							if (it.isItemEnchanted()) {
-								list.add("Item enchanted with following:");
+								list.add(StatCollector.translateToLocal("smartcursor.item.enchItem"));
 								NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
 								if (enchs != null) {
 									for (int i = 0; i < enchs.tagCount(); i++) {
@@ -257,8 +259,8 @@ public class RenderHandler {
 
 	// /////////////////////////////
 	public String getStyleName() {
-		if (Setting.blockDamageStyle == 0) return "PERCENTS";
-		if (Setting.blockDamageStyle == 1) return "PROGRESS BAR";
+		if (Setting.blockDamageStyle == 0) return StatCollector.translateToLocal("smartcursor.style.percents");
+		if (Setting.blockDamageStyle == 1) return StatCollector.translateToLocal("smartcursor.style.progressBar");
 		if (Setting.blockDamageStyle == 2) return "OFF";
 		return "";
 	}
@@ -270,9 +272,9 @@ public class RenderHandler {
 
 	// /////////////////////////// Mob Indicator
 	public String getMobStyleName() {
-		if (Setting.mobStyle == 0) return "NUMERIC";
-		if (Setting.mobStyle == 1) return "PROGRESS BAR";
-		if (Setting.mobStyle == 2) return "ICONS";
+		if (Setting.mobStyle == 0) return StatCollector.translateToLocal("smartcursor.style.numeric");
+		if (Setting.mobStyle == 1) return StatCollector.translateToLocal("smartcursor.style.progressBar");
+		if (Setting.mobStyle == 2) return StatCollector.translateToLocal("smartcursor.style.icons");
 		if (Setting.mobStyle == 3) return "OFF";
 		return "";
 	}
@@ -296,8 +298,8 @@ public class RenderHandler {
 	}
 
 	public String getDropStyleName() {
-		if (Setting.dropStyle == 0) return "NEAR CURSOR";
-		if (Setting.dropStyle == 1) return "IN CORNER";
+		if (Setting.dropStyle == 0) return StatCollector.translateToLocal("smartcursor.pos.center");
+		if (Setting.dropStyle == 1) return StatCollector.translateToLocal("smartcursor.pos.inCorner");
 		return "";
 	}
 
@@ -307,10 +309,10 @@ public class RenderHandler {
 	}
 
 	public String getPlayerStyleName() {
-		if (Setting.playerStyle == 0) return "IN CORNER";
-		if (Setting.playerStyle == 1) return "NUMERIC";
-		if (Setting.playerStyle == 2) return "PROGRESS BAR";
-		if (Setting.playerStyle == 3) return "ICONS";
+		if (Setting.playerStyle == 0) return StatCollector.translateToLocal("smartcursor.pos.inCorner");
+		if (Setting.playerStyle == 1) return StatCollector.translateToLocal("smartcursor.style.numeric");
+		if (Setting.playerStyle == 2) return StatCollector.translateToLocal("smartcursor.style.progressBar");
+		if (Setting.playerStyle == 3) return StatCollector.translateToLocal("smartcursor.style.icons");
 		return "";
 	}
 

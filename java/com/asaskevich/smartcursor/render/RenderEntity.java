@@ -17,6 +17,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.RenderHelper;
@@ -49,58 +50,56 @@ public class RenderEntity {
 			if (entity instanceof EntityTameable) {
 				EntityTameable tame = (EntityTameable) entity;
 				if (tame.isTamed()) {
-					if (tame.getOwner() != null) list.add("Tamed by " + tame.getOwner().getCommandSenderName());
-					else list.add("Tamed!");
-				} else list.add("Not tamed!");
-				if (tame.isSitting()) list.add("Mob sitting");
+					if (tame.getOwner() != null) list.add(StatCollector.translateToLocal("smartcursor.mob.tamedBy") + tame.getOwner().getCommandSenderName());
+					else list.add(StatCollector.translateToLocal("smartcursor.mob.tamed"));
+				} else list.add(StatCollector.translateToLocal("smartcursor.mob.notTamed"));
+				if (tame.isSitting()) list.add(StatCollector.translateToLocal("smartcursor.mob.isSitting"));
 			}
 			if (entity instanceof EntityHorse) {
 				EntityHorse horse = (EntityHorse) entity;
-				list.add("Jump Strength: " + String.format("%.3f", Utils.round(horse.getHorseJumpStrength(), 4)));
-				list.add("Speed: " + String.format("%.3f", Utils.round(horse.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue(), 4)));
-				if (horse.isTame()) list.add("Tamed!");
-				else list.add("Not tamed!");
+				list.add(StatCollector.translateToLocal("smartcursor.mob.jumpStrength") + String.format("%.3f", Utils.round(horse.getHorseJumpStrength(), 4)));
+				list.add(StatCollector.translateToLocal("smartcursor.mob.horseSpeed") + String.format("%.3f", Utils.round(horse.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue(), 4)));
+				if (horse.isTame()) list.add(StatCollector.translateToLocal("smartcursor.mob.tamed"));
+				else list.add(StatCollector.translateToLocal("smartcursor.mob.notTamed"));
 			}
 			if (entity instanceof EntityVillager) {
 				EntityVillager villager = (EntityVillager) entity;
 				switch (villager.getProfession()) {
 					case 0:
-						list.add("Profession: Farmer");
+						list.add(StatCollector.translateToLocal("smartcursor.mob.profession_0"));
 						break;
 					case 1:
-						list.add("Profession: Librarian");
+						list.add(StatCollector.translateToLocal("smartcursor.mob.profession_1"));
 						break;
 					case 2:
-						list.add("Profession: Priest");
+						list.add(StatCollector.translateToLocal("smartcursor.mob.profession_2"));
 						break;
 					case 3:
-						list.add("Profession: Blacksmith");
+						list.add(StatCollector.translateToLocal("smartcursor.mob.profession_3"));
 						break;
 					case 4:
-						list.add("Profession: Butcher");
+						list.add(StatCollector.translateToLocal("smartcursor.mob.profession_4"));
 						break;
 					default:
-						list.add("Profession: Generic");
+						list.add(StatCollector.translateToLocal("smartcursor.mob.profession"));
 						break;
 				}
-				if (villager.isTrading()) {
-					list.add("Wait, he is trading...");
-				}
+				if (villager.isTrading()) list.add(StatCollector.translateToLocal("smartcursor.mob.trade"));
 			}
 			if (entity instanceof EntityAgeable) {
 				EntityAgeable age = (EntityAgeable) entity;
-				if (age.getGrowingAge() < 0) list.add("Child, will grow after ~" + Math.abs(age.getGrowingAge() / 20) + " sec.");
+				if (age.getGrowingAge() < 0) list.add(StatCollector.translateToLocal("smartcursor.mob.child") + Math.abs(age.getGrowingAge() / 20) + StatCollector.translateToLocal("smartcursor.mob.sec"));
 			}
-			if (entity.getTeam() != null) list.add("Team: " + entity.getTeam().getRegisteredName());
-			if (entity.isWet()) list.add("Mob is wet");
-			if (entity.isSprinting()) list.add("Mob is sprinting");
-			if (entity.isRiding()) list.add("Mob is riding");
-			if (entity.isBurning()) list.add("Mob is burning");
-			if (entity.isEntityInvulnerable()) list.add("Mob is invulnerable");
-			if (entity.isEntityUndead()) list.add("Mob is undead");
-			if (entity.isImmuneToFire()) list.add("Mob is immune to fire");
-			if (entity instanceof EntityMob || entity instanceof IMob) list.add("Mob is agressive!");
-			else if (entity instanceof EntityAnimal) list.add("Mob is passive");
+			if (entity.getTeam() != null) list.add(StatCollector.translateToLocal("smartcursor.player.team") + entity.getTeam().getRegisteredName());
+			if (entity.isWet()) list.add(StatCollector.translateToLocal("smartcursor.mob.isWet"));
+			if (entity.isSprinting()) list.add(StatCollector.translateToLocal("smartcursor.mob.isSprinting"));
+			if (entity.isRiding()) list.add(StatCollector.translateToLocal("smartcursor.mob.isRiding"));
+			if (entity.isBurning()) list.add(StatCollector.translateToLocal("smartcursor.mob.isBurning"));
+			if (entity.isEntityInvulnerable()) list.add(StatCollector.translateToLocal("smartcursor.mob.isEntityInvulnerable"));
+			if (entity.isEntityUndead()) list.add(StatCollector.translateToLocal("smartcursor.mob.isUndead"));
+			if (entity.isImmuneToFire()) list.add(StatCollector.translateToLocal("smartcursor.mob.isImmuneToFire"));
+			if (entity instanceof EntityMob || entity instanceof IMob) list.add(StatCollector.translateToLocal("smartcursor.mob.isAgressive"));
+			else if (entity instanceof EntityAnimal) list.add(StatCollector.translateToLocal("smartcursor.mob.isPassive"));
 			if (entity instanceof EntityCreature) {
 				EntityCreature cre = (EntityCreature) entity;
 				ItemStack[] items = cre.getLastActiveItems();
@@ -108,9 +107,9 @@ public class RenderEntity {
 				for (ItemStack item : items)
 					if (item != null) h = true;
 				if (h) {
-					list.add("Equipment:");
+					list.add(StatCollector.translateToLocal("smartcursor.player.equipment"));
 					for (ItemStack item : items)
-						if (item != null) list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? " [Ench]" : ""));
+						if (item != null) list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 				}
 			}
 			String text = String.format("%s: %d/%d", entity.getCommandSenderName(), (int) entity.getHealth(), (int) entity.getMaxHealth());
