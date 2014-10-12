@@ -8,13 +8,14 @@ import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.SmartCursor;
 import com.asaskevich.smartcursor.utils.Setting;
 
-public class GuiSMSettings extends GuiScreen {
-	private RenderHandler renderHandler;
-	private int w;
-	private int h;
-	private int btnW;
-	private int btnH;
-	private int fH;
+public class GuiSMSettings
+		extends GuiScreen {
+	private RenderHandler	renderHandler;
+	private int				w;
+	private int				h;
+	private int				btnW;
+	private int				btnH;
+	private int				fH;
 
 	public GuiSMSettings(RenderHandler renderHandler) {
 		this.renderHandler = renderHandler;
@@ -29,33 +30,24 @@ public class GuiSMSettings extends GuiScreen {
 		fH = this.fontRendererObj.FONT_HEIGHT;
 		this.buttonList.clear();
 		// Enable/Disable all mod
-		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2, btnW, btnH, Setting.isEnabled ? "ON"
-				: "OFF"));
+		this.buttonList.add(new GuiOptionButton(0, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2, btnW, btnH, Setting.isEnabled ? "ON" : "OFF"));
 		// Enable/Disable block damage and choose style
-		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 1, btnW, btnH,
-				renderHandler.getStyleName()));
+		this.buttonList.add(new GuiOptionButton(1, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 1, btnW, btnH, renderHandler.getStyleName()));
 		// Enable/Disable mob indicator and choose style
-		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 2, btnW, btnH,
-				renderHandler.getMobStyleName()));
+		this.buttonList.add(new GuiOptionButton(2, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 2, btnW, btnH, renderHandler.getMobStyleName()));
 		// Show Drop info
-		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 3, btnW, btnH,
-				Setting.showDropInformation ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(3, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 3, btnW, btnH, Setting.showDropInformation ? "ON" : "OFF"));
 		// Show Drop enchs
-		this.buttonList.add(new GuiOptionButton(4, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 4, btnW, btnH,
-				Setting.showEnchantments ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(4, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 4, btnW, btnH, Setting.showEnchantments ? "ON" : "OFF"));
 		// Show Drop durability
-		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 5, btnW, btnH,
-				Setting.showDurability ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(5, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 5, btnW, btnH, Setting.showDurability ? "ON" : "OFF"));
 		// Show XPorb
-		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 6, btnW, btnH,
-				Setting.showXPOrb ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(6, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 6, btnW, btnH, Setting.showXPOrb ? "ON" : "OFF"));
 		// Temp
-		this.buttonList.add(new GuiOptionButton(8, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 7, btnW, btnH,
-				Setting.showPlayerInformation ? "ON" : "OFF"));
-		this.buttonList.add(new GuiOptionButton(9, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 8, btnW, btnH,
-				Setting.showBlockInformation ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(8, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 7, btnW, btnH, Setting.showPlayerInformation ? "ON" : "OFF"));
+		this.buttonList.add(new GuiOptionButton(9, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 8, btnW, btnH, Setting.showBlockInformation ? "ON" : "OFF"));
 		// Advanced options
-		this.buttonList.add(new GuiOptionButton(7, w - btnW - 5, h - btnH - 5, btnW, btnH, "ADVANCED"));
+		this.buttonList.add(new GuiOptionButton(7, w - btnW - 5, h - btnH - 5, btnW, btnH, StatCollector.translateToLocal("smartcursor.gui.advanced")));
 		// Small fix
 		for (int i = 1; i < this.buttonList.size(); i++) {
 			GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(i);
@@ -122,9 +114,7 @@ public class GuiSMSettings extends GuiScreen {
 			renderHandler.invertBlockInfo();
 			button.displayString = Setting.showBlockInformation ? "ON" : "OFF";
 		}
-		if (button.id == 7) {
-			mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler));
-		}
+		if (button.id == 7) mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler));
 		Setting.updateSettings(SmartCursor.config);
 		Setting.syncConfig(SmartCursor.config);
 	}
@@ -133,9 +123,7 @@ public class GuiSMSettings extends GuiScreen {
 	 * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
 	 */
 	protected void keyTyped(char par1, int par2) {
-		if (par2 == 1) {
-			this.mc.thePlayer.closeScreen();
-		}
+		if (par2 == 1) this.mc.thePlayer.closeScreen();
 	}
 
 	/**
@@ -143,26 +131,16 @@ public class GuiSMSettings extends GuiScreen {
 	 */
 	public void drawScreen(int par1, int par2, float par3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.title"), w / 2, (h / 7 - 10) / 2,
-				16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.isEnabled"), w / 4, h / 7 - 60 + 50,
-				16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showBlockDamage"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 1, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showMobHealth"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 2, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDropInfo"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 3, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDropEnchantments"), w / 4, h / 7
-				- 60 + 50 + (btnH + fH / 4) * 4, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDurability"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 5, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showXPorbInfo"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 6, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showPlayerInfo"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 7, 16777215);
-		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showBlockInfo"), w / 4, h / 7 - 60
-				+ 50 + (btnH + fH / 4) * 8, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.title"), w / 2, (h / 7 - 10) / 2, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.isEnabled"), w / 4, h / 7 - 60 + 50, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showBlockDamage"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 1, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showMobHealth"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 2, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDropInfo"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 3, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDropEnchantments"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 4, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showDurability"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 5, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showXPorbInfo"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 6, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showPlayerInfo"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 7, 16777215);
+		this.drawCenteredString(this.fontRendererObj, StatCollector.translateToLocal("smartcursor.gui.showBlockInfo"), w / 4, h / 7 - 60 + 50 + (btnH + fH / 4) * 8, 16777215);
 		super.drawScreen(par1, par2, par3);
 	}
 }

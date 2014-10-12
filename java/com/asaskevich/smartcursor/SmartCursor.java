@@ -22,13 +22,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 @Mod(modid = ModInfo.ID, name = ModInfo.NAME, version = ModInfo.VERSION, canBeDeactivated = true, guiFactory = "com.asaskevich.smartcursor.gui.GUIFactory")
 @SideOnly(Side.CLIENT)
 public class SmartCursor {
-	public static CommonProxy proxy;
-	public static RenderHandler renderHandler;
-	public static KeyInputHandler keyInputHandler;
-	public static Minecraft mc;
-	public static Configuration config;
+	public static CommonProxy		proxy;
+	public static RenderHandler		renderHandler;
+	public static KeyInputHandler	keyInputHandler;
+	public static Minecraft			mc;
+	public static Configuration		config;
 	@Mod.Instance(ModInfo.ID)
-	public static SmartCursor instance;
+	public static SmartCursor		instance;
 
 	@EventHandler
 	public static void preInit(FMLPreInitializationEvent event) {

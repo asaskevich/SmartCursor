@@ -7,9 +7,9 @@ import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.client.config.GuiConfig;
 
-public class ConfigGUI extends GuiConfig {
+public class ConfigGUI
+		extends GuiConfig {
 	public ConfigGUI(GuiScreen parent) {
-		super(parent, new ConfigElement(SmartCursor.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), ModInfo.ID,
-				false, false, GuiConfig.getAbridgedConfigPath(SmartCursor.config.toString()));
+		super(parent, new ConfigElement(SmartCursor.config.getCategory(Configuration.CATEGORY_GENERAL)).getChildElements(), ModInfo.ID, false, false, GuiConfig.getAbridgedConfigPath(SmartCursor.config.toString()));
 	}
 }
