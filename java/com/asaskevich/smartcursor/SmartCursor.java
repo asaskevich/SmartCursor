@@ -3,9 +3,16 @@ package com.asaskevich.smartcursor;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import com.asaskevich.smartcursor.api.EntityModule;
 import com.asaskevich.smartcursor.keyboard.KeyBindler;
 import com.asaskevich.smartcursor.keyboard.KeyInputHandler;
 import com.asaskevich.smartcursor.mod.ModInfo;
+import com.asaskevich.smartcursor.modules.AgeableModule;
+import com.asaskevich.smartcursor.modules.EntityUtilsModule;
+import com.asaskevich.smartcursor.modules.EquipmentModule;
+import com.asaskevich.smartcursor.modules.HorseModule;
+import com.asaskevich.smartcursor.modules.TameableModule;
+import com.asaskevich.smartcursor.modules.VillagerModule;
 import com.asaskevich.smartcursor.proxy.CommonProxy;
 import com.asaskevich.smartcursor.utils.Setting;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
@@ -27,6 +34,7 @@ public class SmartCursor {
 	public static KeyInputHandler	keyInputHandler;
 	public static Minecraft			mc;
 	public static Configuration		config;
+	public static EntityModule[]	entityModules	= { new TameableModule(), new HorseModule(), new VillagerModule(), new AgeableModule(), new EquipmentModule(), new EntityUtilsModule() };
 	@Mod.Instance(ModInfo.ID)
 	public static SmartCursor		instance;
 

@@ -55,7 +55,7 @@ public class RenderPlayer {
 				maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
 			if (Setting.showTooltipInRightCorner) x = width - maxW;
 			RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555, Setting.transparent);
-			RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121, Setting.transparent);
+			RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x010121, Setting.transparent);
 			// Icons
 			mc.entityRenderer.setupOverlayRendering();
 			GL11.glPushMatrix();

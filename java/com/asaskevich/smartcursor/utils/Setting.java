@@ -16,7 +16,7 @@ public class Setting {
 	public static int		mobStyle					= 0;
 	public static int		dropStyle					= 0;
 	public static int		playerStyle					= 0;
-	public static int		transparent					= 255;
+	public static int		transparent					= 140;
 	public static int		delta						= 1000;
 	public static double	lookDistance				= 20f;
 	public static double	maxHeartCount				= 15f;
@@ -24,7 +24,7 @@ public class Setting {
 	public static void syncConfig(Configuration config) {
 		blockDamageStyle = config.getInt("Block Damage Style", Configuration.CATEGORY_GENERAL, blockDamageStyle, 0, 2, "Block Damage Style");
 		delta = config.getInt("Display Time", Configuration.CATEGORY_GENERAL, delta, 0, 5000, "Display Time");
-		transparent = config.getInt("Tooltip Transparent", Configuration.CATEGORY_GENERAL, transparent, 255, 255, "Transparent Of Tooltip");
+		transparent = config.getInt("Tooltip Transparent", Configuration.CATEGORY_GENERAL, transparent, 0, 255, "Transparent Of Tooltip");
 		mobStyle = config.getInt("Style Of Mob Indicator", Configuration.CATEGORY_GENERAL, mobStyle, 0, 3, "Style Of Mob Indicator");
 		playerStyle = config.getInt("Style Of Player Indicator", Configuration.CATEGORY_GENERAL, playerStyle, 0, 3, "Style Of Player Indicator");
 		lookDistance = config.getFloat("Look Distance", Configuration.CATEGORY_GENERAL, (float) lookDistance, 1, 100, "Look Distance");

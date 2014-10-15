@@ -93,6 +93,7 @@ public class RenderHandler {
 						}
 					}
 					if (mc.playerController.isNotCreative() && mc.objectMouseOver.entityHit == null && !Block.isEqualTo(blockLookingAt, Blocks.air) && Setting.showBlockInformation) {
+						EntityPonter.pointedEntity = null;
 						int color = 0xFFFFFF;
 						int x = 4;
 						int y = 4;
@@ -113,136 +114,137 @@ public class RenderHandler {
 							maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
 						if (Setting.showTooltipInRightCorner) x = width - maxW;
 						RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555, Setting.transparent);
-						RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121, Setting.transparent);
+						RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x010121, Setting.transparent);
 						for (int i = 0; i < list.size(); i++)
 							fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
-					}
-				}
-				// Mob
-				if (EntityPonter.pointedEntity != null) {
-					Entity target = EntityPonter.pointedEntity;
-					if (target instanceof EntityPlayer && Setting.showPlayerInformation) {
-						EntityPlayer player = (EntityPlayer) target;
-						renderPlayer.render(player, this);
-					}
-					if (target instanceof EntityLiving) {
-						EntityLiving entity = (EntityLiving) target;
-						renderEntity.render(entity, this);
-					} // Item
-					if (target instanceof EntityItem && Setting.showDropInformation) {
-						EntityItem item = (EntityItem) target;
-						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
-						FontRenderer fontRender = mc.fontRenderer;
-						width = res.getScaledWidth();
-						height = res.getScaledHeight();
-						mc.entityRenderer.setupOverlayRendering();
-						if (Setting.dropStyle == 0) {
-							int color = 0xFFFFFF;
-							String text = (int) item.getEntityItem().stackSize + "x " + item.getEntityItem().getDisplayName();
-							NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
-							if (enchs != null && Setting.showEnchantments) {
-								for (int i = 0; i < enchs.tagCount(); i++) {
-									NBTTagCompound tag = enchs.getCompoundTagAt(i);
-									short id = tag.getShort("id");
-									short lvl = tag.getShort("lvl");
-									Enchantment e = Enchantment.enchantmentsList[id];
-									String enStr = e.getTranslatedName(lvl);
-									int x = width / 2 + 4;
-									int y = height / 2 + 2 + fontRender.FONT_HEIGHT * i;
-									fontRender.drawStringWithShadow(enStr, x, y, color);
-								}
+					} else {
+						if (EntityPonter.pointedEntity != null) {
+							// Mobs
+							Entity target = EntityPonter.pointedEntity;
+							if (target instanceof EntityPlayer && Setting.showPlayerInformation) {
+								EntityPlayer player = (EntityPlayer) target;
+								renderPlayer.render(player, this);
 							}
-							int x = width / 2 - 4 - fontRender.getStringWidth(text);
-							int y = height / 2 - 2 - fontRender.FONT_HEIGHT;
-							fontRender.drawStringWithShadow(text, x, y, color);
-							if (Setting.showDurability) {
-								int maxDamage = item.getEntityItem().getMaxDamage();
-								int damage = item.getEntityItem().getItemDamage();
-								if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) {
-									x = width / 2 + 4;
-									y = height / 2 - 2 - fontRender.FONT_HEIGHT;
-									text = String.format("%d/%d", maxDamage - damage, maxDamage);
+							if (target instanceof EntityLiving) {
+								EntityLiving entity = (EntityLiving) target;
+								renderEntity.render(entity, this);
+							} // Item
+							if (target instanceof EntityItem && Setting.showDropInformation) {
+								EntityItem item = (EntityItem) target;
+								ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+								FontRenderer fontRender = mc.fontRenderer;
+								width = res.getScaledWidth();
+								height = res.getScaledHeight();
+								mc.entityRenderer.setupOverlayRendering();
+								if (Setting.dropStyle == 0) {
+									int color = 0xFFFFFF;
+									String text = (int) item.getEntityItem().stackSize + "x " + item.getEntityItem().getDisplayName();
+									NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
+									if (enchs != null && Setting.showEnchantments) {
+										for (int i = 0; i < enchs.tagCount(); i++) {
+											NBTTagCompound tag = enchs.getCompoundTagAt(i);
+											short id = tag.getShort("id");
+											short lvl = tag.getShort("lvl");
+											Enchantment e = Enchantment.enchantmentsList[id];
+											String enStr = e.getTranslatedName(lvl);
+											int x = width / 2 + 4;
+											int y = height / 2 + 2 + fontRender.FONT_HEIGHT * i;
+											fontRender.drawStringWithShadow(enStr, x, y, color);
+										}
+									}
+									int x = width / 2 - 4 - fontRender.getStringWidth(text);
+									int y = height / 2 - 2 - fontRender.FONT_HEIGHT;
+									fontRender.drawStringWithShadow(text, x, y, color);
+									if (Setting.showDurability) {
+										int maxDamage = item.getEntityItem().getMaxDamage();
+										int damage = item.getEntityItem().getItemDamage();
+										if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) {
+											x = width / 2 + 4;
+											y = height / 2 - 2 - fontRender.FONT_HEIGHT;
+											text = String.format("%d/%d", maxDamage - damage, maxDamage);
+											fontRender.drawStringWithShadow(text, x, y, color);
+										}
+									}
+								} else {
+									ItemStack it = item.getEntityItem();
+									int color = 0xFFFFFF;
+									int x = 4;
+									int y = 4;
+									List<String> list = new ArrayList<String>();
+									list.add("");
+									int maxDamage = item.getEntityItem().getMaxDamage();
+									int damage = item.getEntityItem().getItemDamage();
+									String text = "";
+									if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) text = String.format("%s: %d/%d", it.getDisplayName(), maxDamage - damage, maxDamage);
+									else text = it.getDisplayName();
+									if (it.getItem() instanceof ItemEnchantedBook) {
+										ItemEnchantedBook book = (ItemEnchantedBook) it.getItem();
+										list.add(StatCollector.translateToLocal("smartcursor.item.enchBook"));
+										NBTTagList nbttaglist = book.func_92110_g(it);
+										if (nbttaglist != null) {
+											for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+												short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
+												short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
+												if (Enchantment.enchantmentsList[short1] != null) {
+													list.add(" - " + Enchantment.enchantmentsList[short1].getTranslatedName(short2));
+												}
+											}
+										}
+									}
+									if (it.getItem() instanceof ItemFood) {
+										ItemFood food = (ItemFood) it.getItem();
+										list.add(StatCollector.translateToLocal("smartcursor.item.healAmount") + food.func_150905_g(it));
+										if (food.isWolfsFavoriteMeat()) list.add(StatCollector.translateToLocal("smartcursor.item.wolfsMeat"));
+									}
+									if (it.getItem().isPotionIngredient(it)) list.add(StatCollector.translateToLocal("smartcursor.item.useInPotions"));
+									list.add(StatCollector.translateToLocal("smartcursor.item.count") + it.stackSize);
+									if (it.isStackable())
+										list.add(StatCollector.translateToLocal("smartcursor.item.stackable")
+												+ (it.getMaxStackSize() > 1 ? StatCollector.translateToLocal("smartcursor.item.in") + it.getMaxStackSize() + StatCollector.translateToLocal("smartcursor.item.items") : ""));
+									if (it.isItemDamaged()) list.add(StatCollector.translateToLocal("smartcursor.item.isDamaged"));
+									if (it.isItemEnchantable()) list.add(StatCollector.translateToLocal("smartcursor.item.enchantable"));
+									if (it.getHasSubtypes()) list.add(StatCollector.translateToLocal("smartcursor.item.hasSubtypes"));
+									if (it.hasEffect()) list.add(StatCollector.translateToLocal("smartcursor.item.hasEffect"));
+									if (it.isItemEnchanted()) {
+										list.add(StatCollector.translateToLocal("smartcursor.item.enchItem"));
+										NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
+										if (enchs != null) {
+											for (int i = 0; i < enchs.tagCount(); i++) {
+												NBTTagCompound tag = enchs.getCompoundTagAt(i);
+												short id = tag.getShort("id");
+												short lvl = tag.getShort("lvl");
+												Enchantment e = Enchantment.enchantmentsList[id];
+												String enStr = e.getTranslatedName(lvl);
+												list.add(" - " + enStr);
+											}
+										}
+									}
+									int maxW = fontRender.getStringWidth(text) + 16;
+									for (int i = 1; i < list.size(); i++)
+										maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
+									if (Setting.showTooltipInRightCorner) x = width - maxW;
+									RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555, Setting.transparent);
+									RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x010121, Setting.transparent);
+									for (int i = 1; i < list.size(); i++)
+										fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
 									fontRender.drawStringWithShadow(text, x, y, color);
 								}
 							}
-						} else {
-							ItemStack it = item.getEntityItem();
-							int color = 0xFFFFFF;
-							int x = 4;
-							int y = 4;
-							List<String> list = new ArrayList<String>();
-							list.add("");
-							int maxDamage = item.getEntityItem().getMaxDamage();
-							int damage = item.getEntityItem().getItemDamage();
-							String text = "";
-							if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) text = String.format("%s: %d/%d", it.getDisplayName(), maxDamage - damage, maxDamage);
-							else text = it.getDisplayName();
-							if (it.getItem() instanceof ItemEnchantedBook) {
-								ItemEnchantedBook book = (ItemEnchantedBook) it.getItem();
-								list.add(StatCollector.translateToLocal("smartcursor.item.enchBook"));
-								NBTTagList nbttaglist = book.func_92110_g(it);
-								if (nbttaglist != null) {
-									for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-										short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
-										short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
-										if (Enchantment.enchantmentsList[short1] != null) {
-											list.add(" - " + Enchantment.enchantmentsList[short1].getTranslatedName(short2));
-										}
-									}
-								}
+							// XPOrb
+							if (target instanceof EntityXPOrb && Setting.showXPOrb) {
+								EntityXPOrb xp = (EntityXPOrb) target;
+								ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+								FontRenderer fontRender = mc.fontRenderer;
+								width = res.getScaledWidth();
+								height = res.getScaledHeight();
+								mc.entityRenderer.setupOverlayRendering();
+								int color = 0xFFFFFF;
+								String text = (int) xp.xpValue + " XP";
+								int x = width / 2 - 4 - fontRender.getStringWidth(text);
+								int y = height / 2 + 2;
+								fontRender.drawStringWithShadow(text, x, y, color);
 							}
-							if (it.getItem() instanceof ItemFood) {
-								ItemFood food = (ItemFood) it.getItem();
-								list.add(StatCollector.translateToLocal("smartcursor.item.healAmount") + food.func_150905_g(it));
-								if (food.isWolfsFavoriteMeat()) list.add(StatCollector.translateToLocal("smartcursor.item.wolfsMeat"));
-							}
-							if (it.getItem().isPotionIngredient(it)) list.add(StatCollector.translateToLocal("smartcursor.item.useInPotions"));
-							list.add(StatCollector.translateToLocal("smartcursor.item.count") + it.stackSize);
-							if (it.isStackable())
-								list.add(StatCollector.translateToLocal("smartcursor.item.stackable")
-										+ (it.getMaxStackSize() > 1 ? StatCollector.translateToLocal("smartcursor.item.in") + it.getMaxStackSize() + StatCollector.translateToLocal("smartcursor.item.items") : ""));
-							if (it.isItemDamaged()) list.add(StatCollector.translateToLocal("smartcursor.item.isDamaged"));
-							if (it.isItemEnchantable()) list.add(StatCollector.translateToLocal("smartcursor.item.enchantable"));
-							if (it.getHasSubtypes()) list.add(StatCollector.translateToLocal("smartcursor.item.hasSubtypes"));
-							if (it.hasEffect()) list.add(StatCollector.translateToLocal("smartcursor.item.hasEffect"));
-							if (it.isItemEnchanted()) {
-								list.add(StatCollector.translateToLocal("smartcursor.item.enchItem"));
-								NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
-								if (enchs != null) {
-									for (int i = 0; i < enchs.tagCount(); i++) {
-										NBTTagCompound tag = enchs.getCompoundTagAt(i);
-										short id = tag.getShort("id");
-										short lvl = tag.getShort("lvl");
-										Enchantment e = Enchantment.enchantmentsList[id];
-										String enStr = e.getTranslatedName(lvl);
-										list.add(" - " + enStr);
-									}
-								}
-							}
-							int maxW = fontRender.getStringWidth(text) + 16;
-							for (int i = 1; i < list.size(); i++)
-								maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
-							if (Setting.showTooltipInRightCorner) x = width - maxW;
-							RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555, Setting.transparent);
-							RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x00212121, Setting.transparent);
-							for (int i = 1; i < list.size(); i++)
-								fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
-							fontRender.drawStringWithShadow(text, x, y, color);
 						}
-					}
-					// XPOrb
-					if (target instanceof EntityXPOrb && Setting.showXPOrb) {
-						EntityXPOrb xp = (EntityXPOrb) target;
-						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
-						FontRenderer fontRender = mc.fontRenderer;
-						width = res.getScaledWidth();
-						height = res.getScaledHeight();
-						mc.entityRenderer.setupOverlayRendering();
-						int color = 0xFFFFFF;
-						String text = (int) xp.xpValue + " XP";
-						int x = width / 2 - 4 - fontRender.getStringWidth(text);
-						int y = height / 2 + 2;
-						fontRender.drawStringWithShadow(text, x, y, color);
 					}
 				}
 			}
