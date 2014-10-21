@@ -26,6 +26,9 @@ smartcursor.gui.rightCorner=RIGHT CORNER
 smartcursor.gui.leftCorner=LEFT CORNER
 smartcursor.gui.tooltipDelta=DISPLAY TIME
 smartcursor.gui.displayTime=Display time:
+# Module List
+smartcursor.gui.moduleList=Loaded modules
+smartcursor.gui.loadedModules=All Loaded Modules
 # Items
 smartcursor.item.enchBook=Book has following enchantments:
 smartcursor.item.healAmount=Heal amount: 

@@ -6,25 +6,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityHorse;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.RenderHelper;
-import com.asaskevich.smartcursor.SmartCursor;
-import com.asaskevich.smartcursor.api.EntityModule;
+import com.asaskevich.smartcursor.api.IEntityProcessor;
+import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.utils.Setting;
-import com.asaskevich.smartcursor.utils.Utils;
 
 public class RenderEntity {
 	public Minecraft	mc;
@@ -50,7 +38,7 @@ public class RenderEntity {
 			List<String> list = new ArrayList<String>();
 			list.add("");
 			// Work with modules
-			for (EntityModule module : SmartCursor.entityModules)
+			for (IEntityProcessor module : Modules.entityModules)
 				module.process(list, entity);
 			// Render
 			String text = String.format("%s: %d/%d", entity.getCommandSenderName(), (int) entity.getHealth(), (int) entity.getMaxHealth());

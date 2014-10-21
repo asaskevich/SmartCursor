@@ -17,8 +17,6 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemEnchantedBook;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -26,6 +24,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import com.asaskevich.smartcursor.api.IBlockProcessor;
+import com.asaskevich.smartcursor.api.IDropProcessor;
+import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.render.RenderEntity;
 import com.asaskevich.smartcursor.render.RenderPlayer;
 import com.asaskevich.smartcursor.utils.EntityPonter;
@@ -102,8 +103,10 @@ public class RenderHandler {
 						ItemStack stack = new ItemStack(Item.getItemFromBlock(blockLookingAt));
 						stack.setItemDamage(meta);
 						list.add(stack.getDisplayName());
-						if (blockLookingAt.canHarvestBlock(mc.thePlayer, meta)) list.add(StatCollector.translateToLocal("smartcursor.block.harvestBlock"));
-						else list.add(StatCollector.translateToLocal("smartcursor.block.cantHarvestBlock"));
+						// Work with modules
+						for (IBlockProcessor module : Modules.blockModules)
+							module.process(list, blockLookingAt, meta, mc.theWorld, mop.blockX, mop.blockY, mop.blockZ);
+						// ////
 						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
 						width = res.getScaledWidth();
@@ -177,48 +180,11 @@ public class RenderHandler {
 									String text = "";
 									if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) text = String.format("%s: %d/%d", it.getDisplayName(), maxDamage - damage, maxDamage);
 									else text = it.getDisplayName();
-									if (it.getItem() instanceof ItemEnchantedBook) {
-										ItemEnchantedBook book = (ItemEnchantedBook) it.getItem();
-										list.add(StatCollector.translateToLocal("smartcursor.item.enchBook"));
-										NBTTagList nbttaglist = book.func_92110_g(it);
-										if (nbttaglist != null) {
-											for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-												short short1 = nbttaglist.getCompoundTagAt(i).getShort("id");
-												short short2 = nbttaglist.getCompoundTagAt(i).getShort("lvl");
-												if (Enchantment.enchantmentsList[short1] != null) {
-													list.add(" - " + Enchantment.enchantmentsList[short1].getTranslatedName(short2));
-												}
-											}
-										}
-									}
-									if (it.getItem() instanceof ItemFood) {
-										ItemFood food = (ItemFood) it.getItem();
-										list.add(StatCollector.translateToLocal("smartcursor.item.healAmount") + food.func_150905_g(it));
-										if (food.isWolfsFavoriteMeat()) list.add(StatCollector.translateToLocal("smartcursor.item.wolfsMeat"));
-									}
-									if (it.getItem().isPotionIngredient(it)) list.add(StatCollector.translateToLocal("smartcursor.item.useInPotions"));
 									list.add(StatCollector.translateToLocal("smartcursor.item.count") + it.stackSize);
-									if (it.isStackable())
-										list.add(StatCollector.translateToLocal("smartcursor.item.stackable")
-												+ (it.getMaxStackSize() > 1 ? StatCollector.translateToLocal("smartcursor.item.in") + it.getMaxStackSize() + StatCollector.translateToLocal("smartcursor.item.items") : ""));
-									if (it.isItemDamaged()) list.add(StatCollector.translateToLocal("smartcursor.item.isDamaged"));
-									if (it.isItemEnchantable()) list.add(StatCollector.translateToLocal("smartcursor.item.enchantable"));
-									if (it.getHasSubtypes()) list.add(StatCollector.translateToLocal("smartcursor.item.hasSubtypes"));
-									if (it.hasEffect()) list.add(StatCollector.translateToLocal("smartcursor.item.hasEffect"));
-									if (it.isItemEnchanted()) {
-										list.add(StatCollector.translateToLocal("smartcursor.item.enchItem"));
-										NBTTagList enchs = item.getEntityItem().getEnchantmentTagList();
-										if (enchs != null) {
-											for (int i = 0; i < enchs.tagCount(); i++) {
-												NBTTagCompound tag = enchs.getCompoundTagAt(i);
-												short id = tag.getShort("id");
-												short lvl = tag.getShort("lvl");
-												Enchantment e = Enchantment.enchantmentsList[id];
-												String enStr = e.getTranslatedName(lvl);
-												list.add(" - " + enStr);
-											}
-										}
-									}
+									// Work with modules
+									for (IDropProcessor module : Modules.dropModules)
+										module.process(list, it);
+									// ///////////////
 									int maxW = fontRender.getStringWidth(text) + 16;
 									for (int i = 1; i < list.size(); i++)
 										maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);

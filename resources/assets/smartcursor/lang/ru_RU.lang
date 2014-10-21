@@ -26,6 +26,9 @@ smartcursor.gui.rightCorner=ПРАВЫЙ УГОЛ
 smartcursor.gui.leftCorner=ЛЕВЫЙ УГОЛ
 smartcursor.gui.tooltipDelta=ВРЕМЯ ОТОБРАЖЕНИЯ
 smartcursor.gui.displayTime=Отображать в течение времени:
+# Module List
+smartcursor.gui.moduleList=Загруженные модули
+smartcursor.gui.loadedModules=Все загруженные модули
 # Items
 smartcursor.item.enchBook=Книга имеет след. зачарования:
 smartcursor.item.healAmount=Восст. единиц голода: 
