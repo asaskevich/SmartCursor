@@ -11,4 +11,15 @@ public class PlayerTeamModule
 	public void process(List<String> list, EntityPlayer player) {
 		if (player.getTeam() != null) list.add(StatCollector.translateToLocal("smartcursor.player.team") + player.getTeam().getRegisteredName());
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Team of Player";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

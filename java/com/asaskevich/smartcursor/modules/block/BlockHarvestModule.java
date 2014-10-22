@@ -14,4 +14,14 @@ public class BlockHarvestModule
 		if (block.canHarvestBlock(Minecraft.getMinecraft().thePlayer, meta)) list.add(StatCollector.translateToLocal("smartcursor.block.harvestBlock"));
 		else list.add(StatCollector.translateToLocal("smartcursor.block.cantHarvestBlock"));		
 	}
+
+	@Override
+	public String getModuleName() {
+		return "Harvestable Block";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

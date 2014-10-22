@@ -11,4 +11,15 @@ public class PlayerScoreModule
 	public void process(List<String> list, EntityPlayer player) {
 		list.add(StatCollector.translateToLocal("smartcursor.player.score") + player.getScore());
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Score of player";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

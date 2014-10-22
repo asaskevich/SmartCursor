@@ -29,6 +29,10 @@ smartcursor.gui.displayTime=Отображать в течение времен�
 # Module List
 smartcursor.gui.moduleList=Загруженные модули
 smartcursor.gui.loadedModules=Все загруженные модули
+smartcursor.gui.switch=ВКЛ/ВЫКЛ
+smartcursor.gui.class=Класс модуля
+smartcursor.gui.name=Короткое описание
+smartcursor.gui.author=Автор
 # Items
 smartcursor.item.enchBook=Книга имеет след. зачарования:
 smartcursor.item.healAmount=Восст. единиц голода: 

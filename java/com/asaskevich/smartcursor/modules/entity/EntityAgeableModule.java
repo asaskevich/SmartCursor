@@ -15,4 +15,15 @@ public class EntityAgeableModule
 			if (age.getGrowingAge() < 0) list.add(StatCollector.translateToLocal("smartcursor.mob.child") + Math.abs(age.getGrowingAge() / 20) + StatCollector.translateToLocal("smartcursor.mob.seconds"));
 		}
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Growing time for entityes";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

@@ -105,7 +105,7 @@ public class RenderHandler {
 						list.add(stack.getDisplayName());
 						// Work with modules
 						for (IBlockProcessor module : Modules.blockModules)
-							module.process(list, blockLookingAt, meta, mc.theWorld, mop.blockX, mop.blockY, mop.blockZ);
+							if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, blockLookingAt, meta, mc.theWorld, mop.blockX, mop.blockY, mop.blockZ);
 						// ////
 						ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
 						FontRenderer fontRender = mc.fontRenderer;
@@ -183,7 +183,7 @@ public class RenderHandler {
 									list.add(StatCollector.translateToLocal("smartcursor.item.count") + it.stackSize);
 									// Work with modules
 									for (IDropProcessor module : Modules.dropModules)
-										module.process(list, it);
+										if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, it);
 									// ///////////////
 									int maxW = fontRender.getStringWidth(text) + 16;
 									for (int i = 1; i < list.size(); i++)

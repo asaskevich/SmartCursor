@@ -39,7 +39,7 @@ public class RenderEntity {
 			list.add("");
 			// Work with modules
 			for (IEntityProcessor module : Modules.entityModules)
-				module.process(list, entity);
+				if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, entity);
 			// Render
 			String text = String.format("%s: %d/%d", entity.getCommandSenderName(), (int) entity.getHealth(), (int) entity.getMaxHealth());
 			int maxW = fontRender.getStringWidth(text) + 16;

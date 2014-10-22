@@ -21,4 +21,14 @@ public class PlayerEquipmentModule
 				if (item != null && item != player.getHeldItem()) list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 		}
 	}
+
+	@Override
+	public String getModuleName() {
+		return "Equipment of Player";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

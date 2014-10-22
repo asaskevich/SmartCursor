@@ -3,6 +3,7 @@ package com.asaskevich.smartcursor;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.keyboard.KeyBindler;
 import com.asaskevich.smartcursor.keyboard.KeyInputHandler;
 import com.asaskevich.smartcursor.mod.ModInfo;
@@ -45,6 +46,7 @@ public class SmartCursor {
 		FMLCommonHandler.instance().bus().register(instance);
 		// Register build-in plugins
 		Plugins.init();
+		Modules.loadConfig(config);
 	}
 
 	@EventHandler

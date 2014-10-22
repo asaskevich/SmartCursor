@@ -20,4 +20,15 @@ public class EntityHorseModule
 			else list.add(StatCollector.translateToLocal("smartcursor.mob.notTamed"));
 		}
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Horses - speed, jump strength etc";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

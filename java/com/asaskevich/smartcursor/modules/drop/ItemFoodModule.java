@@ -17,4 +17,15 @@ public class ItemFoodModule
 		}
 		if (stack.getItem().isPotionIngredient(stack)) list.add(StatCollector.translateToLocal("smartcursor.item.useInPotions"));
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Expanded Info about Food";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

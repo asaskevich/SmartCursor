@@ -27,4 +27,15 @@ public class ItemEnchBookModule
 			}
 		}
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Ecnhantments for EnchBook";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

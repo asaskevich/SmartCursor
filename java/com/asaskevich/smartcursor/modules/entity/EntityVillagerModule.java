@@ -35,4 +35,15 @@ public class EntityVillagerModule
 			if (villager.isTrading()) list.add(StatCollector.translateToLocal("smartcursor.mob.trade"));
 		}
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Villager's profession";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

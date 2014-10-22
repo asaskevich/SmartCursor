@@ -29,6 +29,10 @@ smartcursor.gui.displayTime=Display time:
 # Module List
 smartcursor.gui.moduleList=Loaded modules
 smartcursor.gui.loadedModules=All Loaded Modules
+smartcursor.gui.switch=ON/OFF
+smartcursor.gui.class=Module class
+smartcursor.gui.name=Short description
+smartcursor.gui.author=Author
 # Items
 smartcursor.item.enchBook=Book has following enchantments:
 smartcursor.item.healAmount=Heal amount: 

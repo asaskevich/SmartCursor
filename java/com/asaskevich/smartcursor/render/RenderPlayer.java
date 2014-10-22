@@ -7,12 +7,9 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.RenderHelper;
-import com.asaskevich.smartcursor.api.IEntityProcessor;
 import com.asaskevich.smartcursor.api.IPlayerProcessor;
 import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.utils.Setting;
@@ -42,8 +39,8 @@ public class RenderPlayer {
 			list.add("");
 			// Work with modules
 			for (IPlayerProcessor module : Modules.playerModules)
-				module.process(list, player);
-			/////////////////
+				if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, player);
+			// ///////////////
 			String text = String.format("%s: %d/%d", player.getDisplayName(), (int) player.getHealth(), (int) player.getMaxHealth());
 			int maxW = fontRender.getStringWidth(text) + 16;
 			for (int i = 1; i < list.size(); i++)

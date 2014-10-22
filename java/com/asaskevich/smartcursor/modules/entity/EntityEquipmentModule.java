@@ -24,4 +24,14 @@ public class EntityEquipmentModule
 			}
 		}
 	}
+
+	@Override
+	public String getModuleName() {
+		return "Equipment of mob";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

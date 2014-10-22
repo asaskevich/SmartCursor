@@ -25,4 +25,15 @@ public class EntityUtilsModule
 		if (entity instanceof EntityMob || entity instanceof IMob) list.add(StatCollector.translateToLocal("smartcursor.mob.isAgressive"));
 		else if (entity instanceof EntityAnimal) list.add(StatCollector.translateToLocal("smartcursor.mob.isPassive"));
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Some utilitary info for mobs";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

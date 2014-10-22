@@ -27,4 +27,15 @@ public class ItemEnchModule
 			}
 		}
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Enchantments for Item";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }

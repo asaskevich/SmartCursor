@@ -19,4 +19,15 @@ public class EntityTameableModule
 			if (tame.isSitting()) list.add(StatCollector.translateToLocal("smartcursor.mob.isSitting"));
 		}
 	}
+	
+
+	@Override
+	public String getModuleName() {
+		return "Tameable mobs";
+	}
+
+	@Override
+	public String getAuthor() {
+		return "asaskevich";
+	}
 }
