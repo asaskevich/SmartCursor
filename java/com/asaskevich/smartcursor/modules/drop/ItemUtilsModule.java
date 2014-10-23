@@ -21,7 +21,7 @@ public class ItemUtilsModule
 
 	@Override
 	public String getModuleName() {
-		return "Some utilities for items";
+		return "Advanced information about items";
 	}
 
 	@Override

@@ -87,3 +87,5 @@ smartcursor.style.numeric=NUMERIC
 smartcursor.style.icons=ICONS
 smartcursor.style.progressBar=PROGRESS BAR
 smartcursor.style.percents=PERCENTS
+#
+smartcursor.update.url=Update mod here:

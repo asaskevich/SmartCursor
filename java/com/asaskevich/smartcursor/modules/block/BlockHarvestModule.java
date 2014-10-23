@@ -17,7 +17,7 @@ public class BlockHarvestModule
 
 	@Override
 	public String getModuleName() {
-		return "Harvestable Block";
+		return "Can I harvest block or not?";
 	}
 
 	@Override

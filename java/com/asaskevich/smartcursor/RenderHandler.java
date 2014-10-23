@@ -26,7 +26,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import com.asaskevich.smartcursor.api.IBlockProcessor;
 import com.asaskevich.smartcursor.api.IDropProcessor;
-import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.render.RenderEntity;
 import com.asaskevich.smartcursor.render.RenderPlayer;
 import com.asaskevich.smartcursor.utils.EntityPonter;

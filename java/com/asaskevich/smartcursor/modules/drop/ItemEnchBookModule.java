@@ -31,7 +31,7 @@ public class ItemEnchBookModule
 
 	@Override
 	public String getModuleName() {
-		return "Ecnhantments for EnchBook";
+		return "Display all enchantments for enchanted book";
 	}
 
 	@Override

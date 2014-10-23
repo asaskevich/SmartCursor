@@ -1,6 +1,6 @@
 package com.asaskevich.smartcursor;
 
-import com.asaskevich.smartcursor.api.Modules;
+import com.asaskevich.smartcursor.api.ModuleConnector;
 import com.asaskevich.smartcursor.modules.block.BlockHarvestModule;
 import com.asaskevich.smartcursor.modules.drop.ItemEnchBookModule;
 import com.asaskevich.smartcursor.modules.drop.ItemEnchModule;
@@ -18,19 +18,19 @@ import com.asaskevich.smartcursor.modules.player.PlayerTeamModule;
 
 public class Plugins {
 	public static void init() {
-		Modules.registerModule(new BlockHarvestModule());
-		Modules.registerModule(new ItemEnchBookModule());
-		Modules.registerModule(new ItemEnchModule());
-		Modules.registerModule(new ItemFoodModule());
-		Modules.registerModule(new ItemUtilsModule());
-		Modules.registerModule(new PlayerEquipmentModule());
-		Modules.registerModule(new PlayerScoreModule());
-		Modules.registerModule(new PlayerTeamModule());
-		Modules.registerModule(new EntityAgeableModule());
-		Modules.registerModule(new EntityEquipmentModule());
-		Modules.registerModule(new EntityHorseModule());
-		Modules.registerModule(new EntityTameableModule());
-		Modules.registerModule(new EntityUtilsModule());
-		Modules.registerModule(new EntityVillagerModule());
+		ModuleConnector.connectModule(new BlockHarvestModule());
+		ModuleConnector.connectModule(new ItemEnchBookModule());
+		ModuleConnector.connectModule(new ItemEnchModule());
+		ModuleConnector.connectModule(new ItemFoodModule());
+		ModuleConnector.connectModule(new ItemUtilsModule());
+		ModuleConnector.connectModule(new PlayerEquipmentModule());
+		ModuleConnector.connectModule(new PlayerScoreModule());
+		ModuleConnector.connectModule(new PlayerTeamModule());
+		ModuleConnector.connectModule(new EntityAgeableModule());
+		ModuleConnector.connectModule(new EntityEquipmentModule());
+		ModuleConnector.connectModule(new EntityHorseModule());
+		ModuleConnector.connectModule(new EntityTameableModule());
+		ModuleConnector.connectModule(new EntityUtilsModule());
+		ModuleConnector.connectModule(new EntityVillagerModule());
 	}
 }

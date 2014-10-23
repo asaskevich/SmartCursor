@@ -2,14 +2,14 @@
 {
   "modid": "SmartCursor",
   "name": "SmartCursor",
-  "description": "Useful utilities for ingame cursor",
+  "description": "SmartCursor - easy solution to watch important information on your screen.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "https://mods.io/mods/1089-smartcursor",
   "updateUrl": "https://mods.io/mods/1089/download",
   "authorList": ["asaskevich"],
   "parent": "",
-  "screenshots": [],
+  "screenshots": ["smart_cursor.png"],
   "dependencies": []
 }
 ] 

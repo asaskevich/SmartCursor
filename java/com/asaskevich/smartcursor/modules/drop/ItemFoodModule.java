@@ -21,7 +21,7 @@ public class ItemFoodModule
 
 	@Override
 	public String getModuleName() {
-		return "Expanded Info about Food";
+		return "Expanded information about food";
 	}
 
 	@Override

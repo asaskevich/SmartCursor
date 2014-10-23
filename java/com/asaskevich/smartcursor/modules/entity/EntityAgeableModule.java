@@ -19,7 +19,7 @@ public class EntityAgeableModule
 
 	@Override
 	public String getModuleName() {
-		return "Growing time for entityes";
+		return "Add growing time for entities";
 	}
 
 	@Override

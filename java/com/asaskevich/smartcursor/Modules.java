@@ -1,9 +1,15 @@
-package com.asaskevich.smartcursor.api;
+package com.asaskevich.smartcursor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.minecraftforge.common.config.Configuration;
-import com.asaskevich.smartcursor.SmartCursor;
+import com.asaskevich.smartcursor.api.IBlockProcessor;
+import com.asaskevich.smartcursor.api.IDropProcessor;
+import com.asaskevich.smartcursor.api.IEntityProcessor;
+import com.asaskevich.smartcursor.api.IModule;
+import com.asaskevich.smartcursor.api.IPlayerProcessor;
+import com.asaskevich.smartcursor.api.ModuleConnector;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class Modules {
 	public static ArrayList<IEntityProcessor>	entityModules	= new ArrayList<IEntityProcessor>();
@@ -57,6 +63,25 @@ public class Modules {
 		for (String key : moduleStatus.keySet()) {
 			boolean status = config.getBoolean(key, "modules", true, key);
 			moduleStatus.put(key, status);
+		}
+	}
+
+	@SubscribeEvent
+	public void onRegisterModule(ModuleConnector event) {
+		IModule module = event.getModule();
+		switch (event.getType()) {
+			case ModuleConnector.ENTITY_PROCESSOR:
+				registerModule((IEntityProcessor) module);
+				break;
+			case ModuleConnector.BLOCK_PROCESSOR:
+				registerModule((IBlockProcessor) module);
+				break;
+			case ModuleConnector.DROP_PROCESSOR:
+				registerModule((IDropProcessor) module);
+				break;
+			case ModuleConnector.PLAYER_PROCESSOR:
+				registerModule((IPlayerProcessor) module);
+				break;
 		}
 	}
 }

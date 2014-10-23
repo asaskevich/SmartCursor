@@ -8,10 +8,10 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
+import com.asaskevich.smartcursor.Modules;
 import com.asaskevich.smartcursor.RenderHandler;
 import com.asaskevich.smartcursor.RenderHelper;
 import com.asaskevich.smartcursor.api.IPlayerProcessor;
-import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.utils.Setting;
 
 public class RenderPlayer {

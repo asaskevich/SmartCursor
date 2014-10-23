@@ -3,12 +3,12 @@ package com.asaskevich.smartcursor;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import com.asaskevich.smartcursor.api.Modules;
 import com.asaskevich.smartcursor.keyboard.KeyBindler;
 import com.asaskevich.smartcursor.keyboard.KeyInputHandler;
 import com.asaskevich.smartcursor.mod.ModInfo;
 import com.asaskevich.smartcursor.proxy.CommonProxy;
 import com.asaskevich.smartcursor.utils.Setting;
+import com.asaskevich.smartcursor.utils.UpdateManager;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -42,6 +42,8 @@ public class SmartCursor {
 		KeyBindler.init();
 		// Register handlers
 		MinecraftForge.EVENT_BUS.register(renderHandler);
+		MinecraftForge.EVENT_BUS.register(new Modules());
+		FMLCommonHandler.instance().bus().register(new UpdateManager());
 		FMLCommonHandler.instance().bus().register(keyInputHandler);
 		FMLCommonHandler.instance().bus().register(instance);
 		// Register build-in plugins

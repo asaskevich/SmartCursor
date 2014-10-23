@@ -87,3 +87,5 @@ smartcursor.style.numeric=ЧИСЛОВОЙ
 smartcursor.style.icons=ЗНАЧКИ
 smartcursor.style.progressBar=ПРОГРЕССБАР
 smartcursor.style.percents=В ПРОЦЕНТАХ
+#
+smartcursor.update.url=Обновиться можно здесь:
