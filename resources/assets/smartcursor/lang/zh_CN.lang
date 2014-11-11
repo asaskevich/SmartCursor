@@ -77,7 +77,7 @@ smartcursor.mob.profession_4=职业: 屠夫
 smartcursor.mob.profession=职业: 平民
 smartcursor.mob.isWet=此生物已全身湿透
 smartcursor.mob.isSprinting=此生物正在疾跑
-smartcursor.mob.isRiding=此生物正在骑乘
+smartcursor.mob.isRiding=此生物正被骑乘
 smartcursor.mob.isBurning=此生物正在燃烧
 smartcursor.mob.isEntityInvulnerable=此生物刀枪不入
 smartcursor.mob.isUndead=这是亡灵生物
@@ -96,4 +96,4 @@ smartcursor.style.progressBar=进度条
 smartcursor.style.percents=百分比
 
 #
-smartcursor.update.url=在此处更新智能指针模组:
+smartcursor.update.url=请在此处更新智能指针模组:
