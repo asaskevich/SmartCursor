@@ -1,0 +1,99 @@
+# Options GUI
+smartcursor.gui.title=智能指针 选项
+smartcursor.gui.isEnabled=是否启用:
+smartcursor.gui.showBlockDamage=显示方块破坏程度:
+smartcursor.gui.showMobHealth=显示生物血量:
+smartcursor.gui.showDropInfo=显示掉落物信息:
+smartcursor.gui.showDropEnchantments=显示掉落物附魔信息:
+smartcursor.gui.showDurability=显示掉落物耐久度:
+smartcursor.gui.showXPorbInfo=显示经验球信息:
+smartcursor.gui.showPlayerInfo=显示玩家信息:
+smartcursor.gui.showBlockInfo=显示方块信息:
+smartcursor.gui.advanced=高级
+
+# Advanced GUI
+smartcursor.gui.advancedTitle=高级 选项
+smartcursor.gui.showAdvancedInfoMobs=显示进阶生物信息:
+smartcursor.gui.maxHeartCount=生命值图标数量上限:
+smartcursor.gui.showAdvancedDropInfo=显示进阶掉落物信息:
+smartcursor.gui.lookingDistance=显示生物朝向:
+smartcursor.gui.transparent=工具提示透明度:
+smartcursor.gui.styleOfPlayerInfo=玩家信息位置:
+smartcursor.gui.tooltipPosition=工具提示位置:
+smartcursor.gui.heartCount=数量
+smartcursor.gui.distance=距离
+smartcursor.gui.transparent=透明度
+smartcursor.gui.rightCorner=右上角
+smartcursor.gui.leftCorner=左上角
+smartcursor.gui.tooltipDelta=显示时间
+smartcursor.gui.displayTime=显示时间:
+
+# Module List
+smartcursor.gui.moduleList=载入的模块
+smartcursor.gui.loadedModules=所有载入的模块
+smartcursor.gui.switch=启用/禁用
+smartcursor.gui.class=Class
+smartcursor.gui.name=描述
+smartcursor.gui.author=作者
+
+# Items
+smartcursor.item.enchBook=此附魔书拥有下列属性:
+smartcursor.item.healAmount=治愈等级: 
+smartcursor.item.useInPotions=可用于炼药
+smartcursor.item.wolfsMeat=狼最喜欢吃的肉!
+smartcursor.item.enchItem=此物品拥有下列附魔属性:
+smartcursor.item.count=总数: 
+smartcursor.item.hasEffect=此物品附有效果
+smartcursor.item.hasSubtypes=此物品拥有多种样式
+smartcursor.item.enchantable=此物品可附魔
+smartcursor.item.isDamaged=此物品已损坏!
+smartcursor.item.stackable=可堆叠
+smartcursor.item.in=至
+smartcursor.item.items=个
+
+# Blocks
+smartcursor.block.harvestBlock=你可以采掘这个方块
+smartcursor.block.cantHarvestBlock=你需要合适的工具来采掘这个方块
+
+# Players
+smartcursor.player.score=分数: 
+smartcursor.player.equipment=装备:
+smartcursor.player.team=队伍: 
+smartcursor.player.ench= [Ench]
+
+# Entity
+smartcursor.mob.tamedBy=驯服者
+smartcursor.mob.tamed=已被驯服!
+smartcursor.mob.notTamed=未被驯服
+smartcursor.mob.isSitting=此生物正坐着
+smartcursor.mob.horseSpeed=速度: 
+smartcursor.mob.jumpStrength=跳跃高度: 
+smartcursor.mob.trade=请稍等,他正在进行交易...
+smartcursor.mob.profession_0=职业: 农民
+smartcursor.mob.profession_1=职业: 图书管理员
+smartcursor.mob.profession_2=职业: 牧师
+smartcursor.mob.profession_3=职业: 铁匠
+smartcursor.mob.profession_4=职业: 屠夫
+smartcursor.mob.profession=职业: 平民
+smartcursor.mob.isWet=此生物已全身湿透
+smartcursor.mob.isSprinting=此生物正在疾跑
+smartcursor.mob.isRiding=此生物正被骑乘
+smartcursor.mob.isBurning=此生物正在燃烧
+smartcursor.mob.isEntityInvulnerable=此生物刀枪不入
+smartcursor.mob.isUndead=这是亡灵生物
+smartcursor.mob.isImmuneToFire=此生物对火免疫
+smartcursor.mob.isAgressive=此生物具有攻击性!
+smartcursor.mob.isPassive=此生物无攻击性
+smartcursor.mob.child=孩子,会渐渐成长的~
+smartcursor.mob.seconds=秒
+
+# Styles, positions
+smartcursor.pos.inCorner=角落处
+smartcursor.pos.center=靠近准心
+smartcursor.style.numeric=数值
+smartcursor.style.icons=图标
+smartcursor.style.progressBar=进度条
+smartcursor.style.percents=百分比
+
+#
+smartcursor.update.url=请在此处更新智能指针模组:
