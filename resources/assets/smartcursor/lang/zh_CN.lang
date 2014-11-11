@@ -32,8 +32,8 @@ smartcursor.gui.displayTime=显示时间:
 smartcursor.gui.moduleList=载入的模块
 smartcursor.gui.loadedModules=所有载入的模块
 smartcursor.gui.switch=启用/禁用
-smartcursor.gui.class=分类
-smartcursor.gui.name=简介
+smartcursor.gui.class=Class
+smartcursor.gui.name=描述
 smartcursor.gui.author=作者
 
 # Items
