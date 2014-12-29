@@ -7,6 +7,7 @@ import com.asaskevich.smartcursor.api.IDropProcessor;
 
 public class ItemUtilsModule
 		implements IDropProcessor {
+	@SuppressWarnings("deprecation")
 	@Override
 	public void process(List<String> list, ItemStack stack) {
 		if (stack.isStackable())

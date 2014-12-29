@@ -27,7 +27,7 @@ public class UpdateManager {
 					String localVersion = ModInfo.VERSION;
 					String globalVersion = page.substring(l + 12, r);
 					if (localVersion.compareToIgnoreCase(globalVersion) < 0) {
-						UpdateManager.this.event.player.addChatComponentMessage(new ChatComponentText("SmartCursor is out-of-date. Your version - " + localVersion + ", last version - " + globalVersion));
+						UpdateManager.this.event.player.addChatComponentMessage(new ChatComponentText("SmartCursor is out-of-date. Your version - " + localVersion + ", latest version - " + globalVersion));
 						UpdateManager.this.event.player.addChatComponentMessage(generateClickableMessage());
 					}
 				} catch (Exception e) {
@@ -41,7 +41,6 @@ public class UpdateManager {
 		URL url;
 		InputStream is;
 		DataInputStream br;
-		String line, ans = "";
 		url = new URL(address);
 		is = url.openStream();
 		br = new DataInputStream(is);
@@ -54,7 +53,7 @@ public class UpdateManager {
 	}
 
 	public static IChatComponent generateClickableMessage() {
-		ChatComponentText fileLink = new ChatComponentText("Update mod on mods.io!");
+		ChatComponentText fileLink = new ChatComponentText("Update SmartCursor on mods.io!");
 		fileLink.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://mods.io/mods/1089-smartcursor"));
 		fileLink.getChatStyle().setUnderlined(true);
 		return fileLink;

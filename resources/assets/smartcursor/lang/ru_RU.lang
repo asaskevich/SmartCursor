@@ -49,7 +49,10 @@ smartcursor.item.in= в
 smartcursor.item.items= элементов
 # Blocks
 smartcursor.block.harvestBlock=Вы можете собрать этот блок
+smartcursor.block.growable=Выращеваемый
+smartcursor.block.shearable=Можно обработать ножницами
 smartcursor.block.cantHarvestBlock=Выберите другой предмет для сбора этого блока
+smartcursor.block.inventorySize=число слотов: 
 # Players
 smartcursor.player.score=Результат: 
 smartcursor.player.equipment=Одет в:

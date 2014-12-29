@@ -2,11 +2,13 @@ package com.asaskevich.smartcursor;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
 import net.minecraft.enchantment.Enchantment;
@@ -23,9 +25,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import com.asaskevich.smartcursor.api.IBlockProcessor;
 import com.asaskevich.smartcursor.api.IDropProcessor;
+import com.asaskevich.smartcursor.gui.NewYearGuiMainMenu;
+import com.asaskevich.smartcursor.mod.ModInfo;
 import com.asaskevich.smartcursor.render.RenderEntity;
 import com.asaskevich.smartcursor.render.RenderPlayer;
 import com.asaskevich.smartcursor.utils.EntityPonter;
@@ -60,10 +65,30 @@ public class RenderHandler {
 	}
 
 	@SubscribeEvent
+	public void renderMainMenu(GuiOpenEvent e) {
+		Date todayDate = new Date();
+		Date historyDate = new Date(2014 - 1900, 11, 20);
+		Date futureDate = new Date(2015 - 1900, 0, 10);
+		if (todayDate.after(historyDate) && todayDate.before(futureDate)) if (e.gui instanceof GuiMainMenu) {
+			e.gui = new NewYearGuiMainMenu();
+		}
+	}
+
+	@SubscribeEvent
 	public void renderGameOverlay(RenderGameOverlayEvent event) {
 		if (!Setting.isEnabled) return;
 		try {
-			if (event.type == RenderGameOverlayEvent.ElementType.TEXT) {
+			if (event.type == RenderGameOverlayEvent.ElementType.DEBUG) {
+				ScaledResolution res = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+				FontRenderer fontRender = mc.fontRenderer;
+				width = res.getScaledWidth();
+				height = res.getScaledHeight();
+				int y = height - fontRender.FONT_HEIGHT - 5;
+				int x = 5;
+				mc.entityRenderer.setupOverlayRendering();
+				int color = 0xFFFFFF;
+				fontRender.drawStringWithShadow("SmartCursor v" + ModInfo.VERSION, x, y, color);
+			} else if (event.type == RenderGameOverlayEvent.ElementType.TEXT) {
 				MovingObjectPosition mop = mc.renderViewEntity.rayTrace(15, 1F);
 				EntityPonter.getEntityLookingAt(1F);
 				// Block

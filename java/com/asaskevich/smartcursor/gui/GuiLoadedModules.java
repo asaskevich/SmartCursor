@@ -31,7 +31,7 @@ public class GuiLoadedModules
 		this.initGui();
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "static-access" })
 	public void initGui() {
 		this.field_146450_f = new GuiLoadedModules.List();
 		this.field_146450_f.registerScrollButtons(7, 8);
@@ -89,7 +89,7 @@ public class GuiLoadedModules
 		public String					moduleName		= "";
 		public String					moduleAuthor	= "";
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "static-access" })
 		public List() {
 			super(GuiLoadedModules.this.mc, GuiLoadedModules.this.width, GuiLoadedModules.this.height, 32, GuiLoadedModules.this.height - GuiLoadedModules.this.mc.getMinecraft().fontRenderer.FONT_HEIGHT * 4, 18);
 			for (IEntityProcessor module : Modules.entityModules) {

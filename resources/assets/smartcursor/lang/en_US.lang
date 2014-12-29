@@ -49,7 +49,10 @@ smartcursor.item.in= in
 smartcursor.item.items= items
 # Blocks
 smartcursor.block.harvestBlock=You can harvest this block
+smartcursor.block.growable=Growable
+smartcursor.block.shearable=Shearable
 smartcursor.block.cantHarvestBlock=Choose tool, that can harvest this block
+smartcursor.block.inventorySize=slot count: 
 # Players
 smartcursor.player.score=Score: 
 smartcursor.player.equipment=Equipment:
