@@ -2,6 +2,7 @@ SmartCursor
 ===========
 
 Useful Minecraft mod with cursor utilities with own API.
+Full information on [mods.io](https://mods.io/mods/1089-smartcursor)
 
 ### API Tutorial:
 #### Step 1. 
@@ -53,4 +54,5 @@ import com.asaskevich.smartcursor.api.ModuleConnector;
 ModuleConnector.connectModule(new ExampleModule());
 ```
 
-#### Step 7. Build and test your mod!
+#### Step 7. 
+Build and test your mod!
