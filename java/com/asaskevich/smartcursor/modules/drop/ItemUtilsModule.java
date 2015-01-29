@@ -18,7 +18,6 @@ public class ItemUtilsModule
 		if (stack.getHasSubtypes()) list.add(StatCollector.translateToLocal("smartcursor.item.hasSubtypes"));
 		if (stack.hasEffect()) list.add(StatCollector.translateToLocal("smartcursor.item.hasEffect"));
 	}
-	
 
 	@Override
 	public String getModuleName() {

@@ -3,6 +3,7 @@ package com.asaskevich.smartcursor.modules.player;
 import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import com.asaskevich.smartcursor.api.IPlayerProcessor;
 
@@ -15,10 +16,10 @@ public class PlayerEquipmentModule
 		for (ItemStack item : items)
 			if (item != null) h = true;
 		if (h) {
-			list.add(StatCollector.translateToLocal("smartcursor.player.equipment"));
-			list.add(" - " + player.getHeldItem().getDisplayName() + (player.getHeldItem().isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
+			list.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("smartcursor.player.equipment"));
+			list.add(" * " + player.getHeldItem().getDisplayName() + EnumChatFormatting.GOLD + (player.getHeldItem().isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 			for (ItemStack item : items)
-				if (item != null && item != player.getHeldItem()) list.add(" - " + item.getDisplayName() + (item.isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
+				if (item != null && item != player.getHeldItem()) list.add(" * " + item.getDisplayName() + EnumChatFormatting.GOLD + (item.isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 		}
 	}
 

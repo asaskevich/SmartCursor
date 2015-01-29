@@ -48,7 +48,7 @@ public class GuiSMSettings
 		this.buttonList.add(new GuiOptionButton(9, w / 2 + btnW / 2, h / 7 - 60 + 50 - btnH / 2 + (btnH + fH / 4) * 8, btnW, btnH, Setting.showBlockInformation ? "ON" : "OFF"));
 		// Advanced options
 		this.buttonList.add(new GuiOptionButton(7, w - btnW - 5, h - btnH - 5, btnW, btnH, StatCollector.translateToLocal("smartcursor.gui.advanced")));
-		this.buttonList.add(new GuiOptionButton(8, 5, h - btnH - 5, btnW, btnH, StatCollector.translateToLocal("smartcursor.gui.moduleList")));
+		this.buttonList.add(new GuiOptionButton(10, 5, h - btnH - 5, btnW, btnH, StatCollector.translateToLocal("smartcursor.gui.moduleList")));
 		// Small fix
 		for (int i = 1; i < this.buttonList.size(); i++) {
 			GuiOptionButton btn = (GuiOptionButton) this.buttonList.get(i);
@@ -116,7 +116,7 @@ public class GuiSMSettings
 			button.displayString = Setting.showBlockInformation ? "ON" : "OFF";
 		}
 		if (button.id == 7) mc.displayGuiScreen(new GuiAdvancedSettings(renderHandler));
-		if (button.id == 8) mc.displayGuiScreen(new GuiLoadedModules());
+		if (button.id == 10) mc.displayGuiScreen(new GuiLoadedModules());
 		Setting.updateSettings(SmartCursor.config);
 		Setting.syncConfig(SmartCursor.config);
 	}

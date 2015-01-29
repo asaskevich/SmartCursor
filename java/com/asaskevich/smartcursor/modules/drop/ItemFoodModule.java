@@ -17,7 +17,6 @@ public class ItemFoodModule
 		}
 		if (stack.getItem().isPotionIngredient(stack)) list.add(StatCollector.translateToLocal("smartcursor.item.useInPotions"));
 	}
-	
 
 	@Override
 	public String getModuleName() {

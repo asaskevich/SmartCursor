@@ -16,7 +16,7 @@ public class Setting {
 	public static int		mobStyle					= 0;
 	public static int		dropStyle					= 0;
 	public static int		playerStyle					= 0;
-	public static int		transparent					= 140;
+	public static int		transparent					= 100;
 	public static int		delta						= 1000;
 	public static double	lookDistance				= 20f;
 	public static double	maxHeartCount				= 15f;

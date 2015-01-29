@@ -29,7 +29,6 @@ public class Plugins {
 		ModuleConnector.connectModule(new ItemEnchModule());
 		ModuleConnector.connectModule(new ItemFoodModule());
 		ModuleConnector.connectModule(new ItemUtilsModule());
-		ModuleConnector.connectModule(new ItemModIdentificationModule());
 		ModuleConnector.connectModule(new PlayerEquipmentModule());
 		ModuleConnector.connectModule(new PlayerScoreModule());
 		ModuleConnector.connectModule(new PlayerTeamModule());
@@ -40,9 +39,10 @@ public class Plugins {
 		ModuleConnector.connectModule(new EntityUtilsModule());
 		ModuleConnector.connectModule(new EntityVillagerModule());
 		ModuleConnector.connectModule(new BlockChestModule());
-		ModuleConnector.connectModule(new BlockModIdentificatorModule());
 		ModuleConnector.connectModule(new BlockGrowableModule());
 		ModuleConnector.connectModule(new BlockShearableModule());
 		ModuleConnector.connectModule(new EntityShearableModule());
+		ModuleConnector.connectModule(new BlockModIdentificatorModule());
+		ModuleConnector.connectModule(new ItemModIdentificationModule());
 	}
 }

@@ -2,15 +2,14 @@ package com.asaskevich.smartcursor;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -22,18 +21,21 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 import com.asaskevich.smartcursor.api.IBlockProcessor;
 import com.asaskevich.smartcursor.api.IDropProcessor;
-import com.asaskevich.smartcursor.gui.NewYearGuiMainMenu;
 import com.asaskevich.smartcursor.mod.ModInfo;
 import com.asaskevich.smartcursor.render.RenderEntity;
 import com.asaskevich.smartcursor.render.RenderPlayer;
 import com.asaskevich.smartcursor.utils.EntityPonter;
+import com.asaskevich.smartcursor.utils.ModIdentification;
 import com.asaskevich.smartcursor.utils.Setting;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -45,6 +47,7 @@ public class RenderHandler {
 	public ResourceLocation	iconSheet	= new ResourceLocation("minecraft:textures/gui/icons.png");
 	private RenderPlayer	renderPlayer;
 	private RenderEntity	renderEntity;
+	private RenderItem		itemRender;
 
 	public RenderHandler(Minecraft mc) {
 		this.mc = mc;
@@ -52,6 +55,7 @@ public class RenderHandler {
 		this.height = mc.displayHeight;
 		this.renderPlayer = new RenderPlayer();
 		this.renderEntity = new RenderEntity();
+		this.itemRender = new RenderItem();
 		this.curBlockDamage = null;
 		try {
 			for (Field field : PlayerControllerMP.class.getDeclaredFields())
@@ -61,16 +65,6 @@ public class RenderHandler {
 				}
 		} catch (Exception exception) {
 			System.err.println(exception);
-		}
-	}
-
-	@SubscribeEvent
-	public void renderMainMenu(GuiOpenEvent e) {
-		Date todayDate = new Date();
-		Date historyDate = new Date(2014 - 1900, 11, 20);
-		Date futureDate = new Date(2015 - 1900, 0, 10);
-		if (todayDate.after(historyDate) && todayDate.before(futureDate)) if (e.gui instanceof GuiMainMenu) {
-			e.gui = new NewYearGuiMainMenu();
 		}
 	}
 
@@ -117,16 +111,18 @@ public class RenderHandler {
 							}
 						}
 					}
-					if (mc.playerController.isNotCreative() && mc.objectMouseOver.entityHit == null && !Block.isEqualTo(blockLookingAt, Blocks.air) && Setting.showBlockInformation) {
+					if (mc.objectMouseOver.entityHit == null && !Block.isEqualTo(blockLookingAt, Blocks.air) && Setting.showBlockInformation) {
 						EntityPonter.pointedEntity = null;
 						int color = 0xFFFFFF;
 						int x = 4;
 						int y = 4;
 						List<String> list = new ArrayList<String>();
 						int meta = mc.theWorld.getBlockMetadata(mop.blockX, mop.blockY, mop.blockZ);
-						ItemStack stack = new ItemStack(Item.getItemFromBlock(blockLookingAt));
+						Item item = blockLookingAt.getItem(mc.theWorld, mop.blockX, mop.blockY, mop.blockZ);
+						ItemStack stack = new ItemStack(blockLookingAt);
+						if (item != null) stack = new ItemStack(blockLookingAt.getItem(mc.theWorld, mop.blockX, mop.blockY, mop.blockZ));
 						stack.setItemDamage(meta);
-						list.add(stack.getDisplayName());
+						list.add(EnumChatFormatting.BOLD + "" + EnumChatFormatting.GOLD + stack.getDisplayName() + EnumChatFormatting.RESET);
 						// Work with modules
 						for (IBlockProcessor module : Modules.blockModules)
 							if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, blockLookingAt, meta, mc.theWorld, mop.blockX, mop.blockY, mop.blockZ);
@@ -137,13 +133,16 @@ public class RenderHandler {
 						height = res.getScaledHeight();
 						mc.entityRenderer.setupOverlayRendering();
 						int maxW = 0;
-						for (int i = 0; i < list.size(); i++)
+						maxW = Math.max(maxW, fontRender.getStringWidth(list.get(0)) + 16);
+						for (int i = 1; i < list.size(); i++)
 							maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
 						if (Setting.showTooltipInRightCorner) x = width - maxW;
-						RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555, Setting.transparent);
-						RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x010121, Setting.transparent);
-						for (int i = 0; i < list.size(); i++)
-							fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
+						RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1 + 8, 0x555555, Setting.transparent);
+						RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size() + 8, 0x010121, Setting.transparent);
+						renderItem(stack, 0, x, y, 1);
+						fontRender.drawStringWithShadow(list.get(0), x + 20, y + 4, color);
+						for (int i = 1; i < list.size(); i++)
+							fontRender.drawStringWithShadow(list.get(i), x, y + 8 + fontRender.FONT_HEIGHT * i, color);
 					} else {
 						if (EntityPonter.pointedEntity != null) {
 							// Mobs
@@ -202,22 +201,25 @@ public class RenderHandler {
 									int maxDamage = item.getEntityItem().getMaxDamage();
 									int damage = item.getEntityItem().getItemDamage();
 									String text = "";
-									if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) text = String.format("%s: %d/%d", it.getDisplayName(), maxDamage - damage, maxDamage);
-									else text = it.getDisplayName();
+									if (damage > 0 && maxDamage > 0 && maxDamage - damage > 0) text = String.format(EnumChatFormatting.BOLD + "" + EnumChatFormatting.GOLD + "%s:" + EnumChatFormatting.RESET + " %d/%d", it.getDisplayName(),
+											maxDamage - damage, maxDamage);
+									else text = EnumChatFormatting.BOLD + "" + EnumChatFormatting.GOLD + it.getDisplayName() + EnumChatFormatting.RESET;
 									list.add(StatCollector.translateToLocal("smartcursor.item.count") + it.stackSize);
 									// Work with modules
 									for (IDropProcessor module : Modules.dropModules)
 										if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, it);
 									// ///////////////
-									int maxW = fontRender.getStringWidth(text) + 16;
+									int maxW = 0;
+									maxW = Math.max(maxW, fontRender.getStringWidth(text) + 16);
 									for (int i = 1; i < list.size(); i++)
 										maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);
 									if (Setting.showTooltipInRightCorner) x = width - maxW;
-									RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1, 0x555555, Setting.transparent);
-									RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size(), 0x010121, Setting.transparent);
+									RenderHelper.drawRect(x - 5, 0, x + maxW + 1, 8 + fontRender.FONT_HEIGHT * list.size() + 1 + 8, 0x555555, Setting.transparent);
+									RenderHelper.drawRect(x - 4, 0, x + maxW, 8 + fontRender.FONT_HEIGHT * list.size() + 8, 0x010121, Setting.transparent);
+									renderItem(it, 0, x, y, 1);
 									for (int i = 1; i < list.size(); i++)
-										fontRender.drawStringWithShadow(list.get(i), x, y + fontRender.FONT_HEIGHT * i, color);
-									fontRender.drawStringWithShadow(text, x, y, color);
+										fontRender.drawStringWithShadow(list.get(i), x, y + 8 + fontRender.FONT_HEIGHT * i, color);
+									fontRender.drawStringWithShadow(text, x + 20, y + 4, color);
 								}
 							}
 							// XPOrb
@@ -239,8 +241,20 @@ public class RenderHandler {
 				}
 			}
 		} catch (Exception e) {
+			System.out.println("Error");
 			System.err.println(e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
+		}
+	}
+
+	public void renderItem(ItemStack itemstack, int slot, int x, int y, float partialTick) {
+		if (itemstack != null) {
+			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+			net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
+			itemRender.renderItemAndEffectIntoGUI(this.mc.fontRenderer, this.mc.getTextureManager(), itemstack, x, y);
+			net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+			GL11.glDisable(GL11.GL_BLEND);
 		}
 	}
 
@@ -332,5 +346,12 @@ public class RenderHandler {
 
 	public void invertTooltipPlaceInfo() {
 		Setting.showTooltipInRightCorner = !Setting.showTooltipInRightCorner;
+	}
+
+	// ////////////////////////
+	@SubscribeEvent
+	public void addTooltipText(ItemTooltipEvent event) {
+		ItemStack stack = event.itemStack;
+		event.toolTip.add(EnumChatFormatting.AQUA + "" + EnumChatFormatting.ITALIC + ModIdentification.nameFromStack(stack) + EnumChatFormatting.RESET);
 	}
 }

@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import com.asaskevich.smartcursor.api.IEntityProcessor;
 
@@ -22,8 +23,8 @@ public class EntityUtilsModule
 		if (entity.isEntityInvulnerable()) list.add(StatCollector.translateToLocal("smartcursor.mob.isEntityInvulnerable"));
 		if (entity.isEntityUndead()) list.add(StatCollector.translateToLocal("smartcursor.mob.isUndead"));
 		if (entity.isImmuneToFire()) list.add(StatCollector.translateToLocal("smartcursor.mob.isImmuneToFire"));
-		if (entity instanceof EntityMob || entity instanceof IMob) list.add(StatCollector.translateToLocal("smartcursor.mob.isAgressive"));
-		else if (entity instanceof EntityAnimal) list.add(StatCollector.translateToLocal("smartcursor.mob.isPassive"));
+		if (entity instanceof EntityMob || entity instanceof IMob) list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("smartcursor.mob.isAgressive"));
+		else if (entity instanceof EntityAnimal) list.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal("smartcursor.mob.isPassive"));
 	}
 	
 

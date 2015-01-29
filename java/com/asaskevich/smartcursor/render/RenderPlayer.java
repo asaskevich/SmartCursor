@@ -7,6 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import org.lwjgl.opengl.GL11;
 import com.asaskevich.smartcursor.Modules;
 import com.asaskevich.smartcursor.RenderHandler;
@@ -41,7 +42,8 @@ public class RenderPlayer {
 			for (IPlayerProcessor module : Modules.playerModules)
 				if (Modules.isActiveModule(module.getClass().getCanonicalName())) module.process(list, player);
 			// ///////////////
-			String text = String.format("%s: %d/%d", player.getDisplayName(), (int) player.getHealth(), (int) player.getMaxHealth());
+			String text = String.format(EnumChatFormatting.BOLD + "" + EnumChatFormatting.GOLD + "%s:" + EnumChatFormatting.RESET + " %d/%d", player.getDisplayName(), (int) player.getHealth(),
+					(int) player.getMaxHealth());
 			int maxW = fontRender.getStringWidth(text) + 16;
 			for (int i = 1; i < list.size(); i++)
 				maxW = Math.max(maxW, fontRender.getStringWidth(list.get(i)) + 8);

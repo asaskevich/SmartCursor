@@ -26,9 +26,9 @@ public class BlockChestModule
 			TileEntity tileEntity = theWorld.getTileEntity(blockX, blockY, blockZ);
 			if (tileEntity instanceof IInventory) {
 				IInventory inv = (IInventory) tileEntity;
-				String name = inv.getInventoryName();
+				String name = StatCollector.translateToLocal(inv.getInventoryName());
 				int size = inv.getSizeInventory();
-				list.add(name + ": " + StatCollector.translateToLocal("smartcursor.block.inventorySize") + size);
+				list.add(name + " - " + StatCollector.translateToLocal("smartcursor.block.inventorySize") + size);
 			}
 		}
 	}
