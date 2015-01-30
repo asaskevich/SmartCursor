@@ -352,6 +352,14 @@ public class RenderHandler {
 	@SubscribeEvent
 	public void addTooltipText(ItemTooltipEvent event) {
 		ItemStack stack = event.itemStack;
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+            	if (event.showAdvancedItemTooltips)
+            		{
+        	  		event.toolTip.add("Name: " + GameData.getItemRegistry().getNameForObject(stack.getItem()));
+        	  		event.toolTip.add("Unlocalized name:" + stack.getUnlocalizedName());
+        	  		for (int id : OreDictionary.getOreIDs(stack)) event.toolTip.add(EnumChatFormatting.ITALIC + OreDictionary.getOreName(id));
+            		}
+        	}
 		event.toolTip.add(EnumChatFormatting.AQUA + "" + EnumChatFormatting.ITALIC + ModIdentification.nameFromStack(stack) + EnumChatFormatting.RESET);
 	}
 }
