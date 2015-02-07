@@ -16,6 +16,7 @@ public class PlayerEquipmentModule
 		for (ItemStack item : items)
 			if (item != null) h = true;
 		if (h) {
+			list = new ArrayList<String>();
 			list.add(EnumChatFormatting.GRAY + StatCollector.translateToLocal("smartcursor.player.equipment"));
 			list.add(" * " + player.getHeldItem().getDisplayName() + EnumChatFormatting.GOLD + (player.getHeldItem().isItemEnchanted() ? StatCollector.translateToLocal("smartcursor.player.ench") : ""));
 			for (ItemStack item : items)
